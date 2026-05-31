@@ -30,11 +30,11 @@ const FEATURES = [
 
 /* ─── Team members ─── */
 const TEAM = [
-  { name: 'Rotana NOB',       role: 'Lead Developer',  avatar: 'RN' },
-  { name: 'RA Piseth',        role: 'Frontend Dev',    avatar: 'RP' },
-  { name: 'Vuth Sreyneang',   role: 'UI/UX Designer',  avatar: 'VS' },
-  { name: 'Rothana Choung',   role: 'Backend Dev',     avatar: 'RC' },
-  { name: 'Phy Sophorn',      role: 'Database Admin',  avatar: 'PS' },
+  { name: 'Rotana NOB',     role: 'Developer', avatar: 'RN', isLead: true  },
+  { name: 'RA Piseth',      role: 'Member',    avatar: 'RP', isLead: false },
+  { name: 'Vuth Sreyneang', role: 'Member',    avatar: 'VS', isLead: false },
+  { name: 'Rothana Choung', role: 'Member',    avatar: 'RC', isLead: false },
+  { name: 'Phy Sophorn',    role: 'Member',    avatar: 'PS', isLead: false },
 ];
 
 export default function LoginPage({ onLoginSuccess }) {
@@ -377,26 +377,37 @@ export default function LoginPage({ onLoginSuccess }) {
             <div className="lf-credit-header">
               <span className="lf-credit-line" />
               <span className="lf-credit-label">
-                <i className="fas fa-code" /> Built by
+                <i className="fas fa-code" /> Assignment Team
               </span>
               <span className="lf-credit-line" />
             </div>
-            <p className="lf-credit-author">
-              <i className="fas fa-star lf-star-icon" />
-              Rotana NOB
-              <i className="fas fa-star lf-star-icon" />
-            </p>
+
+            {/* Developer credit */}
+            <div className="lf-credit-author">
+              <i className="fas fa-laptop-code lf-dev-icon" />
+              <span>Rotana NOB</span>
+              <span className="lf-dev-badge">Developer</span>
+            </div>
             <p className="lf-credit-uni">
-              Asia Euro University · Year 3 Semester 2 · CS
+              <i className="fas fa-university" />
+              Asia Euro University &nbsp;&middot;&nbsp; Year 3 Semester 2 &nbsp;&middot;&nbsp; CS
             </p>
 
+            {/* Team grid */}
             <div className="lf-team-grid">
               {TEAM.map((m, i) => (
-                <div key={i} className="lf-team-member" title={m.role}>
-                  <div className={`lf-team-avatar lf-av-${i}`}>{m.avatar}</div>
+                <div key={i} className={`lf-team-member${m.isLead ? ' lf-team-lead' : ''}`}>
+                  <div className={`lf-team-avatar lf-av-${i}`}>
+                    {m.isLead
+                      ? <i className="fas fa-crown" />
+                      : <i className="fas fa-user" />}
+                  </div>
                   <div className="lf-team-info">
                     <span className="lf-team-name">{m.name}</span>
-                    <span className="lf-team-role">{m.role}</span>
+                    <span className="lf-team-role">
+                      <i className={m.isLead ? 'fas fa-code' : 'fas fa-users'} />
+                      {m.role}
+                    </span>
                   </div>
                 </div>
               ))}

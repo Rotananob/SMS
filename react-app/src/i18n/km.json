@@ -1,13 +1,13 @@
 {
   "app": {
-    "title": "ប្រព័ន្ធគ្រប់គ្រងសិស្ស",
+    "title": "YOUNG SMS",
     "tagline": "ចូលទៅក្នុងគណនីរបស់អ្នក"
   },
   "nav": {
     "dashboard": "ផ្ទាំងគ្រប់គ្រង",
     "students": "សិស្ស",
-    "courses": "វគ្គ",
-    "attendance": "ឃ្នាប់វត្មាន",
+    "courses": "មុខវិជ្ជា",
+    "attendance": "វត្តមាន",
     "grades": "ពិន្ទុ",
     "reports": "របាយការណ៍",
     "notifications": "ការជូនដំណឹង"
@@ -17,105 +17,122 @@
     "register": "ចុះឈ្មោះ",
     "logout": "ចាកចេញ",
     "create": "បង្កើត",
-    "update": "更新",
+    "update": "កែប្រែ",
     "delete": "លុប",
     "cancel": "បោះបង់",
     "save": "រក្សាទុក",
     "addStudent": "បន្ថែមសិស្ស",
-    "addCourse": "បន្ថែមវគ្គ",
-    "markAttendance": "ធានាវត្មាន",
+    "addCourse": "បន្ថែមមុខវិជ្ជា",
+    "markAttendance": "កត់វត្តមាន",
     "addGrade": "បន្ថែមពិន្ទុ",
     "newNotification": "ការជូនដំណឹងថ្មី",
     "send": "ផ្ញើ",
-    "refresh": "ធ្វើឱ្យថ្មី",
+    "refresh": "ធ្វើឡើងវិញ",
     "settings": "ការកំណត់",
-    "language": "ភាសា"
+    "language": "ភាសា",
+    "viewAll": "មើលទាំងអស់",
+    "quickAction": "សកម្មភាពរហ័ស",
+    "markAllRead": "សម្គាល់ទាំងអស់ថាបានអាន"
   },
   "forms": {
     "email": "អ៊ីមែល",
     "password": "ពាក្យសម្ងាត់",
     "confirmPassword": "បញ្ជាក់ពាក្យសម្ងាត់",
-    "fullName": "ឈ្មោះពេញលេញ",
+    "fullName": "ឈ្មោះពេញ",
     "studentId": "លេខសិស្ស",
     "code": "លេខកូដ",
     "name": "ឈ្មោះ",
-    "credits": "ឯកតាបង្រៀន",
-    "semester": "ស័ក្រសប្តាហ៍",
+    "credits": "ក្រេឌីត",
+    "semester": "ឆមាស",
     "room": "បន្ទប់",
-    "maxStudents": "សិស្សលេខរ៉ាម",
+    "maxStudents": "ចំនួនសិស្សអតិបរមា",
     "instructor": "គ្រូបង្រៀន",
     "student": "សិស្ស",
-    "course": "វគ្គ",
-    "date": "ថ្ងៃខែឆ្នាំ",
+    "course": "មុខវិជ្ជា",
+    "date": "កាលបរិច្ឆេទ",
     "status": "ស្ថានភាព",
-    "note": "ចំណាំ",
-    "assignment": "ការងារផ្ទះ",
+    "note": "កំណត់ចំណាំ",
+    "assignment": "កិច្ចការ",
     "midterm": "ពាក់កណ្តាលឆមាស",
     "final": "ចុងក្រោយ",
     "total": "សរុប",
     "title": "ចំណងជើង",
     "message": "សារ",
     "target": "គោលដៅ",
-    "phone": "ទូរស័ព្ទ",
-    "major": "មជ្ឈដ្ឋាន",
+    "phone": "លេខទូរស័ព្ទ",
+    "major": "ជំនាញ",
     "year": "ឆ្នាំ"
   },
   "messages": {
     "welcome": "សូមស្វាគមន៍!",
-    "loginSuccess": "ចូលលេងដោយជោគជ័យ!",
+    "loginSuccess": "ចូលប្រើប្រាស់ដោយជោគជ័យ!",
     "logoutSuccess": "ចាកចេញដោយជោគជ័យ",
     "registrationSuccess": "ចុះឈ្មោះដោយជោគជ័យ! អ្នកអាចចូលបានឥឡូវនេះ។",
     "createSuccess": "បង្កើតដោយជោគជ័យ",
-    "updateSuccess": "ធ្វើឱ្យប្រែប្រួលដោយជោគជ័យ",
+    "updateSuccess": "កែប្រែដោយជោគជ័យ",
     "deleteSuccess": "លុបដោយជោគជ័យ",
     "error": "កំហុស",
     "loading": "កំពុងផ្ទុក...",
-    "noData": "មិនមានទិន្នន័យ",
-    "confirmDelete": "តើអ្នកប្រាកដថាឬ?",
-    "passwordMismatch": "ពាក្យសម្ងាត់មិនដូចគ្នា",
-    "registrationFailed": "ការចុះឈ្មោះបរាជ័យ",
-    "loginFailed": "ការចូលបរាជ័យ",
-    "noAccount": "មិនមានគណនី? ចុះឈ្មោះ",
-    "alreadyHaveAccount": "មានគណនីរួចទេ? សូមចូល",
+    "noData": "គ្មានទិន្នន័យ",
+    "confirmDelete": "តើអ្នកប្រាកដថាចង់លុបមែនទេ?",
+    "passwordMismatch": "ពាក្យសម្ងាត់មិនត្រូវគ្នា",
+    "registrationFailed": "ការចុះឈ្មោះបានបរាជ័យ",
+    "loginFailed": "ការចូលបានបរាជ័យ",
+    "noAccount": "មិនទាន់មានគណនី? ចុះឈ្មោះ",
+    "alreadyHaveAccount": "មានគណនីរួចហើយ? ចូល",
     "creating": "កំពុងបង្កើត...",
     "signingIn": "កំពុងចូល...",
-    "loginHint": "ប្រើអ៊ីមែល/ពាក្យសម្ងាត់ Firebase របស់អ្នក"
+    "loginHint": "ប្រើអ៊ីមែល និងពាក្យសម្ងាត់ Firebase របស់អ្នក"
   },
   "pages": {
     "dashboard": {
       "title": "ផ្ទាំងគ្រប់គ្រង",
-      "totalStudents": "សិស្សលេខសរុប",
-      "totalCourses": "វគ្គលេខសរុប",
+      "totalStudents": "សិស្សសរុប",
+      "totalCourses": "មុខវិជ្ជាសរុប",
       "enrollments": "ការចុះឈ្មោះ",
-      "averageScore": "ពិន្ទុលេខមធ្យម",
-      "attendanceRate": "អត្រាវត្មាន"
+      "averageScore": "ពិន្ទុមធ្យម",
+      "attendanceRate": "អត្រាវត្តមាន",
+      "recentActivity": "សកម្មភាពថ្មីៗ",
+      "quickActions": "សកម្មភាពរហ័ស",
+      "goodMorning": "អរុណសួស្ដី",
+      "goodAfternoon": "ទិវាសួស្ដី",
+      "goodEvening": "សាយណ្ហសួស្ដី",
+      "welcomeBack": "សូមស្វាគមន៍ការចូលមកវិញ",
+      "systemOverview": "ទិដ្ឋភាពទូទៅប្រព័ន្ធ",
+      "noActivity": "មិនទាន់មានសកម្មភាព",
+      "performance": "ការអនុវត្ត"
     },
     "students": {
-      "title": "សិស្ស",
+      "title": "គ្រប់គ្រងសិស្ស",
       "genderMale": "ប្រុស",
       "genderFemale": "ស្រី",
       "statusActive": "សកម្ម",
       "statusInactive": "អសកម្ម"
     },
     "courses": {
-      "title": "វគ្គ"
+      "title": "គ្រប់គ្រងមុខវិជ្ជា"
     },
     "attendance": {
-      "title": "ឃ្នាប់វត្មាន",
-      "present": "ឡើងវរ",
-      "absent": "អវត្មាន",
+      "title": "វត្តមាន",
+      "present": "មានវត្តមាន",
+      "absent": "អវត្តមាន",
       "late": "យឺត"
     },
     "grades": {
       "title": "ពិន្ទុ",
-      "letter": "លិខិត"
+      "letter": "ចំណាត់ថ្នាក់"
     },
     "reports": {
       "title": "របាយការណ៍",
-      "coursePerformance": "ការងារវគ្គ"
+      "coursePerformance": "ការអនុវត្តមុខវិជ្ជា"
     },
     "notifications": {
-      "title": "ការជូនដំណឹង"
+      "title": "ការជូនដំណឹង",
+      "noNotifications": "គ្មានការជូនដំណឹង",
+      "markAllRead": "សម្គាល់ទាំងអស់ថាបានអាន",
+      "deleteAll": "លុបទាំងអស់",
+      "newNotification": "ការជូនដំណឹងថ្មី",
+      "createNotification": "បង្កើតការជូនដំណឹង"
     }
   }
 }

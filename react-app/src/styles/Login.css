@@ -709,7 +709,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
 }
 .lf-credit-line {
   flex: 1;
@@ -729,51 +729,77 @@
 }
 .lf-credit-label i { color: #6366f1; }
 
+/* Developer highlight row */
 .lf-credit-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+.lf-dev-icon {
+  font-size: 1.05rem;
+  background: linear-gradient(135deg, #818cf8, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: devIconPulse 3s ease-in-out infinite;
+}
+@keyframes devIconPulse {
+  0%, 100% { opacity: 1;  transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.15); }
+}
+.lf-credit-author span:first-of-type {
   font-size: 1rem;
   font-weight: 800;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   background: linear-gradient(135deg, #a5b4fc, #818cf8, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.3rem;
-  display: flex;
+}
+.lf-dev-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.lf-star-icon {
-  font-size: 0.6rem;
-  color: #fbbf24 !important;
-  -webkit-text-fill-color: #fbbf24 !important;
-  animation: starPulse 2s ease-in-out infinite;
-}
-@keyframes starPulse {
-  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-  50%       { opacity: 0.6; transform: scale(1.3) rotate(20deg); }
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #818cf8 !important;
+  -webkit-text-fill-color: #818cf8 !important;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 50px;
+  padding: 0.18rem 0.6rem;
 }
 
 .lf-credit-uni {
-  font-size: 0.73rem;
+  font-size: 0.72rem;
   color: #334155;
   font-weight: 500;
   margin-bottom: 1rem;
-  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
 }
+.lf-credit-uni i { color: #475569; font-size: 0.75rem; }
 
-/* Team grid — 2-column on card width */
+/* Team grid — 2-col default, 1-col on mobile */
 .lf-team-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.55rem;
+  gap: 0.5rem;
   text-align: left;
 }
-/* Last item (5th) — center it */
+/* 5th item spans full row */
 .lf-team-member:last-child:nth-child(odd) {
   grid-column: 1 / -1;
-  max-width: 200px;
+  max-width: 210px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .lf-team-member {
@@ -790,25 +816,32 @@
 .lf-team-member:hover {
   background: rgba(99,102,241,0.07);
   border-color: rgba(99,102,241,0.2);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+/* Lead member highlight */
+.lf-team-lead {
+  border-color: rgba(99,102,241,0.25);
+  background: rgba(99,102,241,0.06);
+}
+.lf-team-lead:hover {
+  background: rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.4);
 }
 
-/* Colored avatars */
+/* Avatars with FA icons */
 .lf-team-avatar {
-  width: 32px; height: 32px;
-  border-radius: 8px;
+  width: 34px; height: 34px;
+  border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem;
   flex-shrink: 0;
   color: #fff;
 }
 .lf-av-0 { background: linear-gradient(135deg, #6366f1, #818cf8); box-shadow: 0 2px 8px rgba(99,102,241,0.4); }
-.lf-av-1 { background: linear-gradient(135deg, #0ea5e9, #38bdf8); box-shadow: 0 2px 8px rgba(14,165,233,0.4); }
-.lf-av-2 { background: linear-gradient(135deg, #ec4899, #f472b6); box-shadow: 0 2px 8px rgba(236,72,153,0.4); }
-.lf-av-3 { background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 2px 8px rgba(16,185,129,0.4); }
-.lf-av-4 { background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
+.lf-av-1 { background: linear-gradient(135deg, #0ea5e9, #38bdf8); box-shadow: 0 2px 8px rgba(14,165,233,0.35); }
+.lf-av-2 { background: linear-gradient(135deg, #ec4899, #f472b6); box-shadow: 0 2px 8px rgba(236,72,153,0.35); }
+.lf-av-3 { background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 2px 8px rgba(16,185,129,0.35); }
+.lf-av-4 { background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 2px 8px rgba(245,158,11,0.35); }
 
 .lf-team-info {
   display: flex;
@@ -825,9 +858,29 @@
 }
 .lf-team-role {
   font-size: 0.67rem;
-  color: #334155;
+  color: #475569;
   font-weight: 500;
-  margin-top: 1px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.lf-team-role i { font-size: 0.6rem; opacity: 0.7; }
+
+/* ---- Responsive: credit section ---- */
+@media (max-width: 480px) {
+  .lf-team-grid {
+    grid-template-columns: 1fr;
+  }
+  .lf-team-member:last-child:nth-child(odd) {
+    grid-column: auto;
+    max-width: 100%;
+    margin: 0;
+  }
+  .lf-credit-author {
+    flex-direction: row;
+    justify-content: center;
+  }
 }
 
 /* ============================================================
