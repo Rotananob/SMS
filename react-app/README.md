@@ -7,7 +7,7 @@ A modern React.js frontend for the Student Management System with Firebase backe
 - Node.js (v14 or higher)
 - npm or yarn
 
-## Setup
+## Setup​​​-up
 
 ### 1. Install Dependencies
 
