@@ -165,4 +165,4 @@ Make sure the Flask app is running on port 5000 before starting the React dev se
 
 ## License
 
-© 2024 Student Management System. All rights reserved.
+© Rotana NOB (Student Management System). All rights reserved.
