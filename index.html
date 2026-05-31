@@ -1,139 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Management System</title>
-  <meta name="description" content="A modern student management system for academic institutions." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="/static/css/style.css" />
-</head>
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/12.14.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/12.14.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-functions-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/12.14.0/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
 
-<body>
-
-  <!-- ── Login Screen ─────────────────────────────────────────── -->
-  <div id="login-screen" class="login-screen">
-    <div class="login-card">
-      <div class="login-logo">
-        <i class="fas fa-graduation-cap"></i>
-      </div>
-      <h1 class="login-title">Student Management System</h1>
-      <p class="login-sub">Sign in to your account</p>
-
-      <form id="login-form" class="login-form">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <div class="input-icon">
-            <i class="fas fa-user"></i>
-            <input type="text" id="username" placeholder="Enter username" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <div class="input-icon">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Enter password" required />
-          </div>
-        </div>
-        <div id="login-error" class="alert alert-danger hidden"></div>
-        <button type="submit" class="btn btn-primary btn-block" id="login-btn">
-          <span>Sign In</span>
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      </form>
-
-      <p class="login-hint">Default: <strong>admin</strong> / <strong>admin123</strong></p>
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
+      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message">
+      <h2>Welcome</h2>
+      <h1>Firebase Hosting Setup Complete</h1>
+      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
+      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
     </div>
-  </div>
+    <p id="load">Firebase SDK Loading&hellip;</p>
 
-  <!-- ── Main App Shell ────────────────────────────────────────── -->
-  <div id="app" class="app hidden">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const loadEl = document.querySelector('#load');
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.firestore().doc('/foo/bar').get().then(() => { });
+        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        // firebase.analytics(); // call to activate
+        // firebase.analytics().logEvent('tutorial_completed');
+        // firebase.performance(); // call to activate
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <i class="fas fa-graduation-cap sidebar-logo-icon"></i>
-        <span class="sidebar-title">SMS</span>
-        <button class="sidebar-close" id="sidebar-close"><i class="fas fa-times"></i></button>
-      </div>
-
-      <nav class="sidebar-nav">
-        <ul id="nav-links">
-          <li><a href="#" data-page="dashboard" class="nav-link active"><i
-                class="fas fa-home"></i><span>Dashboard</span></a></li>
-          <li><a href="#" data-page="students" class="nav-link"><i
-                class="fas fa-user-graduate"></i><span>Students</span></a></li>
-          <li><a href="#" data-page="courses" class="nav-link"><i class="fas fa-book"></i><span>Courses</span></a></li>
-          <li><a href="#" data-page="attendance" class="nav-link"><i
-                class="fas fa-calendar-check"></i><span>Attendance</span></a></li>
-          <li><a href="#" data-page="grades" class="nav-link"><i class="fas fa-star"></i><span>Grades</span></a></li>
-          <li><a href="#" data-page="reports" class="nav-link"><i class="fas fa-chart-bar"></i><span>Reports</span></a>
-          </li>
-          <li><a href="#" data-page="notifications" class="nav-link"><i
-                class="fas fa-bell"></i><span>Notifications</span></a></li>
-        </ul>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="user-info" id="user-info"></div>
-        <button class="btn-logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="main-wrapper">
-      <header class="topbar">
-        <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
-        <div class="topbar-title" id="topbar-title">Dashboard</div>
-        <div class="topbar-actions">
-          <button class="topbar-icon-btn" id="notif-btn">
-            <i class="fas fa-bell"></i>
-            <span class="badge" id="notif-badge" style="display:none">0</span>
-          </button>
-          <div class="avatar" id="topbar-avatar"></div>
-        </div>
-      </header>
-
-      <main class="main-content" id="main-content">
-        <!-- Pages are injected here by app.js -->
-        <div class="page-loader" id="page-loader">
-          <div class="spinner"></div>
-        </div>
-      </main>
-    </div>
-
-  </div>
-
-  <!-- ── Modal ─────────────────────────────────────────────────── -->
-  <div id="modal-overlay" class="modal-overlay hidden">
-    <div class="modal" id="modal">
-      <div class="modal-header">
-        <h3 id="modal-title">Modal</h3>
-        <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body" id="modal-body"></div>
-      <div class="modal-footer" id="modal-footer"></div>
-    </div>
-  </div>
-
-  <!-- ── Toast ─────────────────────────────────────────────────── -->
-  <div id="toast-container"></div>
-
-  <!-- App Scripts -->
-  <script src="/static/js/api.js"></script>
-  <script src="/static/js/app.js"></script>
-  <script src="/static/js/auth.js"></script>
-  <script src="/static/js/dashboard.js"></script>
-  <script src="/static/js/students.js"></script>
-  <script src="/static/js/courses.js"></script>
-  <script src="/static/js/attendance.js"></script>
-  <script src="/static/js/grades.js"></script>
-  <script src="/static/js/reports.js"></script>
-  <script src="/static/js/notifications.js"></script>
-</body>
-
+        try {
+          let app = firebase.app();
+          let features = [
+            'auth', 
+            'database', 
+            'firestore',
+            'functions',
+            'messaging', 
+            'storage', 
+            'analytics', 
+            'remoteConfig',
+            'performance',
+          ].filter(feature => typeof app[feature] === 'function');
+          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+  </body>
 </html>

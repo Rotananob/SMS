@@ -4,9 +4,11 @@ import '../index.css';
 
 export default function CoursesPage({ addToast }) {
   const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     code: '',
     name: '',
@@ -20,11 +22,29 @@ export default function CoursesPage({ addToast }) {
   useEffect(() => {
     const unsubscribe = courseService.subscribe((data) => {
       setCourses(data);
+      setFilteredCourses(data);
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Filter courses based on search term
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredCourses(courses);
+    } else {
+      const term = searchTerm.toLowerCase();
+      setFilteredCourses(
+        courses.filter(course =>
+          course.code?.toLowerCase().includes(term) ||
+          course.name?.toLowerCase().includes(term) ||
+          course.instructor?.toLowerCase().includes(term) ||
+          course.room?.toLowerCase().includes(term)
+        )
+      );
+    }
+  }, [searchTerm, courses]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -91,13 +111,44 @@ export default function CoursesPage({ addToast }) {
     });
   };
 
+  const handleRefresh = () => {
+    setLoading(true);
+    courseService.subscribe((data) => {
+      setCourses(data);
+      setFilteredCourses(data);
+      setLoading(false);
+      addToast('Data refreshed successfully', 'success');
+    });
+  };
+
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Courses</h1>
-        <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-          + {showForm ? 'Cancel' : 'Add Course'}
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button className="btn btn-secondary" onClick={handleRefresh} title="Refresh Data">
+            <i className="fas fa-sync-alt"></i>
+            <span>Refresh</span>
+          </button>
+          <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
+            + {showForm ? 'Cancel' : 'Add Course'}
+          </button>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div style={{ marginBottom: '2rem', display: 'flex', gap: '1rem' }}>
+        <div style={{ flex: 1, position: 'relative' }}>
+          <i className="fas fa-search" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none' }}></i>
+          <input
+            type="text"
+            placeholder="Search by code, name, instructor, or room..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control"
+            style={{ paddingLeft: '2.75rem' }}
+          />
+        </div>
       </div>
 
       {showForm && (
@@ -144,8 +195,10 @@ export default function CoursesPage({ addToast }) {
 
       {loading ? (
         <p>Loading...</p>
-      ) : courses.length === 0 ? (
-        <div className="error-msg">No courses found</div>
+      ) : filteredCourses.length === 0 ? (
+        <div className="error-msg">
+          {searchTerm ? `No courses found matching "${searchTerm}"` : 'No courses found'}
+        </div>
       ) : (
         <div className="table-container">
           <table>
@@ -162,7 +215,7 @@ export default function CoursesPage({ addToast }) {
               </tr>
             </thead>
             <tbody>
-              {courses.map(course => (
+              {filteredCourses.map(course => (
                 <tr key={course.id}>
                   <td>{course.code}</td>
                   <td>{course.name}</td>

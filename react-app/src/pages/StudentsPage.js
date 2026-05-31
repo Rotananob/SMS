@@ -4,9 +4,11 @@ import '../index.css';
 
 export default function StudentsPage({ addToast }) {
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     full_name: '',
     student_id: '',
@@ -21,11 +23,30 @@ export default function StudentsPage({ addToast }) {
     // Subscribe to real-time updates
     const unsubscribe = studentService.subscribe((data) => {
       setStudents(data);
+      setFilteredStudents(data);
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Filter students based on search term
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredStudents(students);
+    } else {
+      const term = searchTerm.toLowerCase();
+      setFilteredStudents(
+        students.filter(student =>
+          student.full_name?.toLowerCase().includes(term) ||
+          student.student_id?.toLowerCase().includes(term) ||
+          student.phone?.toLowerCase().includes(term) ||
+          student.major?.toLowerCase().includes(term) ||
+          student.email?.toLowerCase().includes(term)
+        )
+      );
+    }
+  }, [searchTerm, students]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,13 +113,44 @@ export default function StudentsPage({ addToast }) {
     });
   };
 
+  const handleRefresh = () => {
+    setLoading(true);
+    studentService.subscribe((data) => {
+      setStudents(data);
+      setFilteredStudents(data);
+      setLoading(false);
+      addToast('Data refreshed successfully', 'success');
+    });
+  };
+
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Students</h1>
-        <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
-          + {showForm ? 'Cancel' : 'Add Student'}
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button className="btn btn-secondary" onClick={handleRefresh} title="Refresh Data">
+            <i className="fas fa-sync-alt"></i>
+            <span>Refresh</span>
+          </button>
+          <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
+            + {showForm ? 'Cancel' : 'Add Student'}
+          </button>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div style={{ marginBottom: '2rem', display: 'flex', gap: '1rem' }}>
+        <div style={{ flex: 1, position: 'relative' }}>
+          <i className="fas fa-search" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none' }}></i>
+          <input
+            type="text"
+            placeholder="Search by name, student ID, phone, or major..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control"
+            style={{ paddingLeft: '2.75rem' }}
+          />
+        </div>
       </div>
 
       {showForm && (
@@ -152,8 +204,10 @@ export default function StudentsPage({ addToast }) {
 
       {loading ? (
         <p>Loading...</p>
-      ) : students.length === 0 ? (
-        <div className="error-msg">No students found</div>
+      ) : filteredStudents.length === 0 ? (
+        <div className="error-msg">
+          {searchTerm ? `No students found matching "${searchTerm}"` : 'No students found'}
+        </div>
       ) : (
         <div className="table-container">
           <table>
@@ -169,7 +223,7 @@ export default function StudentsPage({ addToast }) {
               </tr>
             </thead>
             <tbody>
-              {students.map(student => (
+              {filteredStudents.map(student => (
                 <tr key={student.id}>
                   <td>{student.student_id}</td>
                   <td>{student.full_name}</td>

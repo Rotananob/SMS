@@ -71,7 +71,15 @@
     "error": "កំហុស",
     "loading": "កំពុងផ្ទុក...",
     "noData": "មិនមានទិន្នន័យ",
-    "confirmDelete": "តើអ្នកប្រាកដថាឬ?"
+    "confirmDelete": "តើអ្នកប្រាកដថាឬ?",
+    "passwordMismatch": "ពាក្យសម្ងាត់មិនដូចគ្នា",
+    "registrationFailed": "ការចុះឈ្មោះបរាជ័យ",
+    "loginFailed": "ការចូលបរាជ័យ",
+    "noAccount": "មិនមានគណនី? ចុះឈ្មោះ",
+    "alreadyHaveAccount": "មានគណនីរួចទេ? សូមចូល",
+    "creating": "កំពុងបង្កើត...",
+    "signingIn": "កំពុងចូល...",
+    "loginHint": "ប្រើអ៊ីមែល/ពាក្យសម្ងាត់ Firebase របស់អ្នក"
   },
   "pages": {
     "dashboard": {

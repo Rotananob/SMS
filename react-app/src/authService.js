@@ -3,6 +3,9 @@ import {
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword,
 } from 'firebase/auth';
 import { auth } from './firebase';
 
@@ -30,6 +33,21 @@ export const authService = {
   // ទទួលបាននូវម្ដងម្កាល់ដែលនិយាយលេង
   getCurrentUser: () => {
     return auth.currentUser;
+  },
+
+  // Re-authenticate user with current password
+  reauthenticate: (email, password) => {
+    const user = auth.currentUser;
+    if (!user) throw new Error('No user logged in');
+    const credential = EmailAuthProvider.credential(email, password);
+    return reauthenticateWithCredential(user, credential);
+  },
+
+  // Update user password
+  updatePassword: (newPassword) => {
+    const user = auth.currentUser;
+    if (!user) throw new Error('No user logged in');
+    return updatePassword(user, newPassword);
   },
 };
 

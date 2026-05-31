@@ -1,0 +1,858 @@
+/* ===================================================
+   PREMIUM LOGIN PAGE — Student Management System
+   Split-panel | Glassmorphism | Micro-animations
+   =================================================== */
+
+/* ---- Canvas & Root ---- */
+.login-screen {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #060d1f;
+  font-family: 'Inter', 'Poppins', -apple-system, sans-serif;
+}
+
+/* ============================================================
+   LEFT PANEL — Animated hero side
+   ============================================================ */
+.login-left {
+  flex: 1.1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3rem;
+  overflow: hidden;
+  background: linear-gradient(140deg, #0d1b3e 0%, #0a1628 40%, #0f172a 100%);
+}
+
+/* Mesh gradient base */
+.login-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 30%, rgba(99, 102, 241, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(236, 72, 153, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 60% 10%, rgba(14, 165, 233, 0.12) 0%, transparent 50%);
+  z-index: 0;
+}
+
+/* Animated orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: orbFloat linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 {
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
+  top: -120px; left: -100px;
+  animation-duration: 18s;
+  animation-delay: 0s;
+}
+.orb-2 {
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.28) 0%, transparent 70%);
+  bottom: -80px; right: -60px;
+  animation-duration: 22s;
+  animation-delay: -7s;
+}
+.orb-3 {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, transparent 70%);
+  bottom: 30%; left: 10%;
+  animation-duration: 15s;
+  animation-delay: -3s;
+}
+.orb-4 {
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+  top: 55%; right: 15%;
+  animation-duration: 19s;
+  animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  25%  { transform: translate(15px, -20px) scale(1.06); }
+  50%  { transform: translate(-10px, 20px) scale(0.96); }
+  75%  { transform: translate(20px, 10px) scale(1.04); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* Floating particles */
+.particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  animation: particleRise linear infinite;
+}
+.particle:nth-child(1)  { left: 10%; animation-duration: 12s; animation-delay: 0s;   width: 2px; height: 2px; }
+.particle:nth-child(2)  { left: 25%; animation-duration: 16s; animation-delay: -2s;  }
+.particle:nth-child(3)  { left: 40%; animation-duration: 10s; animation-delay: -5s;  width: 4px; height: 4px; opacity: 0.4; }
+.particle:nth-child(4)  { left: 55%; animation-duration: 14s; animation-delay: -1s;  }
+.particle:nth-child(5)  { left: 70%; animation-duration: 18s; animation-delay: -8s;  width: 2px; height: 2px; }
+.particle:nth-child(6)  { left: 85%; animation-duration: 11s; animation-delay: -3s;  }
+.particle:nth-child(7)  { left: 15%; animation-duration: 20s; animation-delay: -6s;  width: 4px; height: 4px; opacity: 0.3; }
+.particle:nth-child(8)  { left: 60%; animation-duration: 13s; animation-delay: -9s;  }
+.particle:nth-child(9)  { left: 35%; animation-duration: 17s; animation-delay: -4s;  width: 2px; height: 2px; }
+.particle:nth-child(10) { left: 78%; animation-duration: 15s; animation-delay: -7s;  }
+@keyframes particleRise {
+  0%   { transform: translateY(110vh); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Grid overlay */
+.login-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* Hero content */
+.login-hero {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 480px;
+}
+
+.login-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  border-radius: 50px;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(8px);
+  animation: fadeSlideDown 0.7s ease both;
+}
+.login-hero-badge .badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #6366f1;
+  box-shadow: 0 0 8px rgba(99,102,241,0.8);
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+.login-hero-icon {
+  width: 96px; height: 96px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 50%, #ec4899 100%);
+  border-radius: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem; color: #fff;
+  box-shadow:
+    0 0 0 1px rgba(99,102,241,0.3),
+    0 20px 40px rgba(99, 102, 241, 0.4),
+    0 0 60px rgba(99, 102, 241, 0.2);
+  animation: iconBob 4s ease-in-out infinite;
+  position: relative;
+}
+.login-hero-icon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.4), rgba(236,72,153,0.3));
+  z-index: -1;
+  animation: iconGlow 4s ease-in-out infinite;
+}
+@keyframes iconBob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes iconGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.login-hero-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #f1f5f9 0%, #c7d2fe 50%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeSlideUp 0.8s 0.1s ease both;
+}
+
+.login-hero-subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  line-height: 1.7;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  animation: fadeSlideUp 0.8s 0.2s ease both;
+}
+
+/* Feature pills */
+.login-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  animation: fadeSlideUp 0.8s 0.3s ease both;
+}
+.login-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 0.75rem 1.1rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+.login-feature:hover {
+  background: rgba(99,102,241,0.08);
+  border-color: rgba(99,102,241,0.25);
+  transform: translateX(4px);
+}
+.login-feature-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.fi-purple { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+.fi-cyan   { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
+.fi-green  { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.login-feature-text { font-size: 0.88rem; color: #94a3b8; font-weight: 500; }
+
+/* ============================================================
+   RIGHT PANEL — Form side
+   ============================================================ */
+.login-right {
+  flex: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2.5rem;
+  position: relative;
+  background: rgba(10, 15, 30, 0.6);
+  border-left: 1px solid rgba(148, 163, 184, 0.07);
+}
+
+/* Subtle glow behind card */
+.login-right::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ---- Card ---- */
+.login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%; max-width: 440px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 28px;
+  padding: 3rem 2.5rem;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 32px 64px rgba(0, 0, 0, 0.5),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+  animation: cardEntrance 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cardEntrance {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Shine border top */
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.6), rgba(236,72,153,0.4), transparent);
+}
+
+/* ---- Form header ---- */
+.login-form-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.login-mode-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #818cf8;
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 50px;
+  padding: 0.3rem 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #f1f5f9;
+  margin-bottom: 0.4rem;
+  /* Remove the old gradient clip that conflicts */
+  background: none;
+  -webkit-text-fill-color: #f1f5f9;
+}
+
+.login-sub {
+  font-size: 0.92rem;
+  color: #475569;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+/* ---- Mode toggle tabs ---- */
+.login-tabs {
+  display: flex;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 2rem;
+  gap: 4px;
+}
+.login-tab {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 11px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.login-tab.active {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+}
+.login-tab:not(.active):hover {
+  color: #94a3b8;
+  background: rgba(255,255,255,0.05);
+}
+
+/* ---- Form groups ---- */
+.login-form .form-group {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+.login-form .form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.4px;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
+/* Input wrapper */
+.lf-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.lf-input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #475569;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.lf-input-wrap:focus-within .lf-input-icon {
+  color: #6366f1;
+}
+
+/* The actual input */
+.lf-input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 2.8rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1.5px solid rgba(148, 163, 184, 0.1);
+  border-radius: 12px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  -webkit-appearance: none;
+}
+.lf-input::placeholder { color: #334155; }
+.lf-input:hover {
+  border-color: rgba(148, 163, 184, 0.2);
+  background: rgba(20, 30, 55, 0.9);
+}
+.lf-input:focus {
+  border-color: #6366f1;
+  background: rgba(15, 23, 42, 0.95);
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Password toggle */
+.lf-pwd-toggle {
+  position: absolute;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 6px;
+  transition: color 0.3s ease;
+  z-index: 2;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+.lf-pwd-toggle:hover { color: #818cf8; }
+
+/* Input with padding-right for toggle */
+.has-toggle { padding-right: 2.8rem; }
+
+/* Animated underline focus bar */
+.lf-input-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%; right: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+  border-radius: 0 0 12px 12px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+.lf-input-wrap:focus-within::after {
+  left: 0; right: 0;
+  opacity: 1;
+}
+
+/* ---- Remember me & Forgot ---- */
+.lf-extras {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.lf-remember {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.lf-remember input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: #6366f1;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.lf-remember span {
+  font-size: 0.83rem;
+  color: #64748b;
+  font-weight: 500;
+  user-select: none;
+}
+.lf-forgot {
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #6366f1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.25s;
+  text-decoration: none;
+}
+.lf-forgot:hover { color: #818cf8; text-decoration: underline; }
+
+/* ---- Alerts ---- */
+.lf-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  animation: alertPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes alertPop {
+  from { opacity: 0; transform: scale(0.95) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.lf-alert-danger {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+.lf-alert-success {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+}
+.lf-alert i { margin-top: 1px; flex-shrink: 0; }
+
+/* ---- Submit button ---- */
+.lf-submit {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #6366f1 0%, #818cf8 50%, #7c3aed 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  color: #fff;
+  box-shadow:
+    0 4px 20px rgba(99, 102, 241, 0.45),
+    0 1px 3px rgba(0,0,0,0.3);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.lf-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+.lf-submit:hover:not(:disabled)::before {
+  transform: translateX(100%);
+}
+.lf-submit:hover:not(:disabled) {
+  background-position: 100% 50%;
+  box-shadow:
+    0 8px 30px rgba(99, 102, 241, 0.6),
+    0 2px 8px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+.lf-submit:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+.lf-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading spinner inside button */
+.lf-spinner {
+  width: 18px; height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Divider ---- */
+.lf-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.lf-divider::before,
+.lf-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(148,163,184,0.1);
+}
+
+/* ---- Toggle mode link ---- */
+.lf-toggle-wrap {
+  text-align: center;
+}
+.lf-toggle-text {
+  font-size: 0.88rem;
+  color: #475569;
+  font-weight: 500;
+}
+.lf-toggle-btn {
+  background: none;
+  border: none;
+  color: #818cf8;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  transition: all 0.25s;
+  font-family: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+}
+.lf-toggle-btn:hover {
+  color: #a5b4fc;
+  text-decoration-color: #a5b4fc;
+}
+
+/* ---- Demo hint ---- */
+.lf-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+.lf-hint i { color: #334155; font-size: 0.85rem; }
+
+/* ============================================================
+   FIELD ANIMATION — slide in when registering
+   ============================================================ */
+.lf-slide-in {
+  animation: slideFieldIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes slideFieldIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   KEYFRAMES — shared
+   ============================================================ */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   TEAM CREDIT SECTION
+   ============================================================ */
+.lf-credit-section {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.08);
+  text-align: center;
+}
+
+.lf-credit-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+.lf-credit-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent);
+}
+.lf-credit-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #475569;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.lf-credit-label i { color: #6366f1; }
+
+.lf-credit-author {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #a5b4fc, #818cf8, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.lf-star-icon {
+  font-size: 0.6rem;
+  color: #fbbf24 !important;
+  -webkit-text-fill-color: #fbbf24 !important;
+  animation: starPulse 2s ease-in-out infinite;
+}
+@keyframes starPulse {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50%       { opacity: 0.6; transform: scale(1.3) rotate(20deg); }
+}
+
+.lf-credit-uni {
+  font-size: 0.73rem;
+  color: #334155;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2px;
+}
+
+/* Team grid — 2-column on card width */
+.lf-team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  text-align: left;
+}
+/* Last item (5th) — center it */
+.lf-team-member:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.lf-team-member {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 0.5rem 0.65rem;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+.lf-team-member:hover {
+  background: rgba(99,102,241,0.07);
+  border-color: rgba(99,102,241,0.2);
+  transform: translateY(-1px);
+}
+
+/* Colored avatars */
+.lf-team-avatar {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  color: #fff;
+}
+.lf-av-0 { background: linear-gradient(135deg, #6366f1, #818cf8); box-shadow: 0 2px 8px rgba(99,102,241,0.4); }
+.lf-av-1 { background: linear-gradient(135deg, #0ea5e9, #38bdf8); box-shadow: 0 2px 8px rgba(14,165,233,0.4); }
+.lf-av-2 { background: linear-gradient(135deg, #ec4899, #f472b6); box-shadow: 0 2px 8px rgba(236,72,153,0.4); }
+.lf-av-3 { background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 2px 8px rgba(16,185,129,0.4); }
+.lf-av-4 { background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
+
+.lf-team-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.lf-team-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lf-team-role {
+  font-size: 0.67rem;
+  color: #334155;
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .login-left { display: none; }
+  .login-right {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    background: #060d1f;
+    border-left: none;
+    border-top: 1px solid rgba(148,163,184,0.07);
+  }
+  .login-card {
+    max-width: 100%;
+    padding: 2.25rem 1.75rem;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-right { padding: 1.5rem 1rem; }
+  .login-card { padding: 2rem 1.25rem; border-radius: 16px; }
+  .login-hero-title { font-size: 1.8rem; }
+  .lf-submit { font-size: 0.95rem; }
+  .lf-extras { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+}
