@@ -1,0 +1,185 @@
+{
+  "app": {
+    "title": "YOUNG SMS",
+    "tagline": "ចូលទៅក្នុងគណនីរបស់អ្នក"
+  },
+  "nav": {
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "students": "សិស្ស",
+    "courses": "មុខវិជ្ជា",
+    "attendance": "វត្តមាន",
+    "grades": "ពិន្ទុ",
+    "reports": "របាយការណ៍",
+    "notifications": "ការជូនដំណឹង",
+    "settings": "ការកំណត់"
+  },
+  "buttons": {
+    "signIn": "ចូល",
+    "register": "ចុះឈ្មោះ",
+    "logout": "ចាកចេញ",
+    "create": "បង្កើត",
+    "update": "កែប្រែ",
+    "delete": "លុប",
+    "cancel": "បោះបង់",
+    "save": "រក្សាទុក",
+    "addStudent": "បន្ថែមសិស្ស",
+    "addCourse": "បន្ថែមមុខវិជ្ជា",
+    "markAttendance": "កត់វត្តមាន",
+    "addGrade": "បន្ថែមពិន្ទុ",
+    "newNotification": "ការជូនដំណឹងថ្មី",
+    "send": "ផ្ញើ",
+    "refresh": "ធ្វើឡើងវិញ",
+    "settings": "ការកំណត់",
+    "language": "ភាសា",
+    "viewAll": "មើលទាំងអស់",
+    "quickAction": "សកម្មភាពរហ័ស",
+    "markAllRead": "សម្គាល់ទាំងអស់ថាបានអាន"
+  },
+  "forms": {
+    "email": "អ៊ីមែល",
+    "password": "ពាក្យសម្ងាត់",
+    "confirmPassword": "បញ្ជាក់ពាក្យសម្ងាត់",
+    "fullName": "ឈ្មោះពេញ",
+    "studentId": "លេខសិស្ស",
+    "code": "លេខកូដ",
+    "name": "ឈ្មោះ",
+    "credits": "ក្រេឌីត",
+    "semester": "ឆមាស",
+    "room": "បន្ទប់",
+    "maxStudents": "ចំនួនសិស្សអតិបរមា",
+    "instructor": "គ្រូបង្រៀន",
+    "student": "សិស្ស",
+    "course": "មុខវិជ្ជា",
+    "date": "កាលបរិច្ឆេទ",
+    "status": "ស្ថានភាព",
+    "note": "កំណត់ចំណាំ",
+    "assignment": "កិច្ចការ",
+    "midterm": "ពាក់កណ្តាលឆមាស",
+    "final": "ចុងក្រោយ",
+    "total": "សរុប",
+    "title": "ចំណងជើង",
+    "message": "សារ",
+    "target": "គោលដៅ",
+    "phone": "លេខទូរស័ព្ទ",
+    "major": "ជំនាញ",
+    "year": "ឆ្នាំ"
+  },
+  "messages": {
+    "welcome": "សូមស្វាគមន៍!",
+    "loginSuccess": "ចូលប្រើប្រាស់ដោយជោគជ័យ!",
+    "logoutSuccess": "ចាកចេញដោយជោគជ័យ",
+    "registrationSuccess": "ចុះឈ្មោះដោយជោគជ័យ! អ្នកអាចចូលបានឥឡូវនេះ។",
+    "createSuccess": "បង្កើតដោយជោគជ័យ",
+    "updateSuccess": "កែប្រែដោយជោគជ័យ",
+    "deleteSuccess": "លុបដោយជោគជ័យ",
+    "error": "កំហុស",
+    "loading": "កំពុងផ្ទុក...",
+    "noData": "គ្មានទិន្នន័យ",
+    "confirmDelete": "តើអ្នកប្រាកដថាចង់លុបមែនទេ?",
+    "passwordMismatch": "ពាក្យសម្ងាត់មិនត្រូវគ្នា",
+    "registrationFailed": "ការចុះឈ្មោះបានបរាជ័យ",
+    "loginFailed": "ការចូលបានបរាជ័យ",
+    "noAccount": "មិនទាន់មានគណនី? ចុះឈ្មោះ",
+    "alreadyHaveAccount": "មានគណនីរួចហើយ? ចូល",
+    "creating": "កំពុងបង្កើត...",
+    "signingIn": "កំពុងចូល...",
+    "loginHint": "ប្រើអ៊ីមែល និងពាក្យសម្ងាត់ Firebase របស់អ្នក"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "ផ្ទាំងគ្រប់គ្រង",
+      "totalStudents": "សិស្សសរុប",
+      "totalCourses": "មុខវិជ្ជាសរុប",
+      "enrollments": "ការចុះឈ្មោះ",
+      "averageScore": "ពិន្ទុមធ្យម",
+      "attendanceRate": "អត្រាវត្តមាន",
+      "recentActivity": "សកម្មភាពថ្មីៗ",
+      "quickActions": "សកម្មភាពរហ័ស",
+      "goodMorning": "អរុណសួស្ដី",
+      "goodAfternoon": "ទិវាសួស្ដី",
+      "goodEvening": "សាយណ្ហសួស្ដី",
+      "welcomeBack": "សូមស្វាគមន៍ការចូលមកវិញ",
+      "systemOverview": "ទិដ្ឋភាពទូទៅប្រព័ន្ធ",
+      "noActivity": "មិនទាន់មានសកម្មភាព",
+      "performance": "ការអនុវត្ត"
+    },
+    "students": {
+      "title": "គ្រប់គ្រងសិស្ស",
+      "genderMale": "ប្រុស",
+      "genderFemale": "ស្រី",
+      "statusActive": "សកម្ម",
+      "statusInactive": "អសកម្ម"
+    },
+    "courses": {
+      "title": "គ្រប់គ្រងមុខវិជ្ជា"
+    },
+    "attendance": {
+      "title": "វត្តមាន",
+      "present": "មានវត្តមាន",
+      "absent": "អវត្តមាន",
+      "late": "យឺត"
+    },
+    "grades": {
+      "title": "ពិន្ទុ",
+      "letter": "ចំណាត់ថ្នាក់"
+    },
+    "reports": {
+      "title": "របាយការណ៍",
+      "coursePerformance": "ការអនុវត្តមុខវិជ្ជា"
+    },
+    "notifications": {
+      "title": "ការជូនដំណឹង",
+      "noNotifications": "គ្មានការជូនដំណឹង",
+      "markAllRead": "សម្គាល់ទាំងអស់ថាបានអាន",
+      "deleteAll": "លុបទាំងអស់",
+      "newNotification": "ការជូនដំណឹងថ្មី",
+      "createNotification": "បង្កើតការជូនដំណឹង"
+    },
+    "settings": {
+      "title": "ការកំណត់",
+      "profile": "ការកំណត់ប្រវត្តិរូប",
+      "security": "សុវត្ថិភាព",
+      "preferences": "ចំណូលចិត្ត"
+    }
+  }
+  ,
+  "login": {
+    "modeTagCreate": "✦ ចុះឈ្មោះ",
+    "modeTagLogin": "✦ ចូលដោយសុវត្ថិភាព",
+    "titleWelcome": "សូមស្វាគមន៍វិញ",
+    "titleRegister": "ចាប់ផ្តើម",
+    "subWelcome": "ចូលដើម្បីប្រើផ្ទាំងគ្រប់គ្រង។",
+    "subRegister": "បង្កើតគណនីអ្នកគ្រប់គ្រងរបស់អ្នកនៅខាងក្រោម។",
+    "tabs": {
+      "signIn": "ចូល",
+      "register": "ចុះឈ្មោះ"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "បញ្ចូលពាក្យសម្ងាត់"
+    },
+    "rememberMe": "ចងចាំខ្ញុំ",
+    "forgotPassword": "ភ្លេចពាក្យសម្ងាត់?",
+    "signingIn": "កំពុងចូល...",
+    "guestAccess": "ចូលទៅព័រទាលសាធារណៈ (អានតែ sahaja)",
+    "or": "ឬ",
+    "toggle": {
+      "noAccount": "មិនទាន់មានគណនី? ",
+      "haveAccount": "មានគណនីរួចហើយ? ",
+      "signIn": "ចូល",
+      "register": "ចុះឈ្មោះ"
+    },
+    "errors": {
+      "enterFullName": "សូមបញ្ចូលឈ្មោះពេញរបស់អ្នក។",
+      "passwordMismatch": "ពាក្យសម្ងាត់មិនត្រូវគ្នា។",
+      "passwordShort": "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ 6 តួអក្សរ។"
+    },
+    "success": {
+      "created": "បានបង្កើតគណនី! កំពុងចូល...",
+      "welcome": "សូមស្វាគមន៍! កំពុងបើកផ្ទាំងគ្រប់គ្រង..."
+    },
+    "showPwd": "បង្ហាញពាក្យសម្ងាត់",
+    "hidePwd": "លាក់ពាក្យសម្ងាត់",
+    "demoHint": "ប្រើអ៊ីមែល និងពាក្យសម្ងាត់ Firebase របស់អ្នក"
+  }
+}
