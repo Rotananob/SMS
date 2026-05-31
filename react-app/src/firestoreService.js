@@ -8,10 +8,32 @@ import {
   deleteDoc,
   query,
   where,
+  orderBy,
   onSnapshot,
   serverTimestamp,
+  limit,
 } from 'firebase/firestore';
 import { db } from './firebase';
+
+// ========================
+// ACTIVITY NOTIFICATION HELPER
+// Automatically creates a Firestore notification on every important action
+// ========================
+const pushNotification = async ({ title, message, type = 'info', category = 'system', icon = 'fas fa-bell' }) => {
+  try {
+    await addDoc(collection(db, 'notifications'), {
+      title,
+      message,
+      type,       // 'success' | 'warning' | 'danger' | 'info'
+      category,   // 'student' | 'course' | 'grade' | 'attendance' | 'system'
+      icon,
+      read: false,
+      createdAt: serverTimestamp(),
+    });
+  } catch (err) {
+    console.warn('Could not push notification:', err);
+  }
+};
 
 // ========================
 // STUDENTS
@@ -48,6 +70,13 @@ export const studentService = {
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
+      await pushNotification({
+        title: 'Student Added',
+        message: `New student "${studentData.name || studentData.fullName || 'Unknown'}" has been added to the system.`,
+        type: 'success',
+        category: 'student',
+        icon: 'fas fa-user-plus',
+      });
       return docRef.id;
     } catch (error) {
       console.error('Error creating student:', error);
@@ -61,15 +90,29 @@ export const studentService = {
         ...studentData,
         updatedAt: serverTimestamp(),
       });
+      await pushNotification({
+        title: 'Student Updated',
+        message: `Student record for "${studentData.name || studentData.fullName || id}" has been updated.`,
+        type: 'info',
+        category: 'student',
+        icon: 'fas fa-user-edit',
+      });
     } catch (error) {
       console.error('Error updating student:', error);
       throw error;
     }
   },
 
-  delete: async (id) => {
+  delete: async (id, name = '') => {
     try {
       await deleteDoc(doc(db, 'students', id));
+      await pushNotification({
+        title: 'Student Removed',
+        message: `Student "${name || id}" has been removed from the system.`,
+        type: 'warning',
+        category: 'student',
+        icon: 'fas fa-user-minus',
+      });
     } catch (error) {
       console.error('Error deleting student:', error);
       throw error;
@@ -104,6 +147,13 @@ export const courseService = {
         ...courseData,
         createdAt: serverTimestamp(),
       });
+      await pushNotification({
+        title: 'Course Created',
+        message: `New course "${courseData.name || courseData.code || 'Unknown'}" has been added.`,
+        type: 'success',
+        category: 'course',
+        icon: 'fas fa-book-open',
+      });
       return docRef.id;
     } catch (error) {
       console.error('Error creating course:', error);
@@ -113,16 +163,33 @@ export const courseService = {
 
   update: async (id, courseData) => {
     try {
-      await updateDoc(doc(db, 'courses', id), courseData);
+      await updateDoc(doc(db, 'courses', id), {
+        ...courseData,
+        updatedAt: serverTimestamp(),
+      });
+      await pushNotification({
+        title: 'Course Updated',
+        message: `Course "${courseData.name || id}" has been updated.`,
+        type: 'info',
+        category: 'course',
+        icon: 'fas fa-book',
+      });
     } catch (error) {
       console.error('Error updating course:', error);
       throw error;
     }
   },
 
-  delete: async (id) => {
+  delete: async (id, name = '') => {
     try {
       await deleteDoc(doc(db, 'courses', id));
+      await pushNotification({
+        title: 'Course Removed',
+        message: `Course "${name || id}" has been removed.`,
+        type: 'warning',
+        category: 'course',
+        icon: 'fas fa-book',
+      });
     } catch (error) {
       console.error('Error deleting course:', error);
       throw error;
@@ -160,6 +227,13 @@ export const enrollmentService = {
       const docRef = await addDoc(collection(db, 'enrollments'), {
         ...enrollmentData,
         enrolledAt: serverTimestamp(),
+      });
+      await pushNotification({
+        title: 'Student Enrolled',
+        message: `A student has been enrolled in a new course.`,
+        type: 'success',
+        category: 'course',
+        icon: 'fas fa-user-check',
       });
       return docRef.id;
     } catch (error) {
@@ -212,6 +286,14 @@ export const attendanceService = {
         ...attendanceData,
         date: serverTimestamp(),
       });
+      const statusLabel = attendanceData.status === 'present' ? 'Present' : attendanceData.status === 'absent' ? 'Absent' : 'Late';
+      await pushNotification({
+        title: 'Attendance Marked',
+        message: `Attendance recorded as "${statusLabel}" for a student.`,
+        type: attendanceData.status === 'present' ? 'success' : attendanceData.status === 'absent' ? 'danger' : 'warning',
+        category: 'attendance',
+        icon: 'fas fa-clipboard-check',
+      });
       return docRef.id;
     } catch (error) {
       console.error('Error marking attendance:', error);
@@ -261,6 +343,13 @@ export const gradeService = {
         ...gradeData,
         createdAt: serverTimestamp(),
       });
+      await pushNotification({
+        title: 'Grade Recorded',
+        message: `A grade of ${gradeData.total || 'N/A'}/100 has been recorded for a student.`,
+        type: 'success',
+        category: 'grade',
+        icon: 'fas fa-star',
+      });
       return docRef.id;
     } catch (error) {
       console.error('Error creating grade:', error);
@@ -273,6 +362,13 @@ export const gradeService = {
       await updateDoc(doc(db, 'grades', id), {
         ...gradeData,
         updatedAt: serverTimestamp(),
+      });
+      await pushNotification({
+        title: 'Grade Updated',
+        message: `A student's grade has been updated to ${gradeData.total || 'N/A'}/100.`,
+        type: 'info',
+        category: 'grade',
+        icon: 'fas fa-edit',
       });
     } catch (error) {
       console.error('Error updating grade:', error);
@@ -306,11 +402,23 @@ export const notificationService = {
     try {
       const docRef = await addDoc(collection(db, 'notifications'), {
         ...notificationData,
+        type: notificationData.type || 'info',
+        icon: notificationData.icon || 'fas fa-bell',
+        read: false,
         createdAt: serverTimestamp(),
       });
       return docRef.id;
     } catch (error) {
       console.error('Error creating notification:', error);
+      throw error;
+    }
+  },
+
+  markRead: async (id) => {
+    try {
+      await updateDoc(doc(db, 'notifications', id), { read: true });
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
       throw error;
     }
   },
@@ -325,9 +433,17 @@ export const notificationService = {
   },
 
   subscribe: (callback) => {
-    return onSnapshot(collection(db, 'notifications'), (snapshot) => {
+    // Order by createdAt descending so newest first
+    const q = query(collection(db, 'notifications'), orderBy('createdAt', 'desc'), limit(50));
+    return onSnapshot(q, (snapshot) => {
       const notifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       callback(notifications);
+    }, () => {
+      // Fallback without ordering if index not ready
+      return onSnapshot(collection(db, 'notifications'), (snapshot) => {
+        const notifications = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        callback(notifications);
+      });
     });
   },
 };
