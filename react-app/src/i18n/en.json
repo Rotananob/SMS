@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Student Management System",
+    "title": "YOUNG SMS",
     "tagline": "Sign in to your account"
   },
   "nav": {
@@ -29,7 +29,10 @@
     "send": "Send",
     "refresh": "Refresh",
     "settings": "Settings",
-    "language": "Language"
+    "language": "Language",
+    "viewAll": "View All",
+    "quickAction": "Quick Actions",
+    "markAllRead": "Mark All as Read"
   },
   "forms": {
     "email": "Email",
@@ -71,7 +74,7 @@
     "error": "Error",
     "loading": "Loading...",
     "noData": "No data found",
-    "confirmDelete": "Are you sure?"
+    "confirmDelete": "Are you sure you want to delete this?"
   },
   "pages": {
     "dashboard": {
@@ -80,7 +83,16 @@
       "totalCourses": "Total Courses",
       "enrollments": "Enrollments",
       "averageScore": "Average Score",
-      "attendanceRate": "Attendance Rate"
+      "attendanceRate": "Attendance Rate",
+      "recentActivity": "Recent Activity",
+      "quickActions": "Quick Actions",
+      "goodMorning": "Good Morning",
+      "goodAfternoon": "Good Afternoon",
+      "goodEvening": "Good Evening",
+      "welcomeBack": "Welcome back",
+      "systemOverview": "System Overview",
+      "noActivity": "No recent activity",
+      "performance": "Performance"
     },
     "students": {
       "title": "Students",
@@ -107,7 +119,12 @@
       "coursePerformance": "Course Performance"
     },
     "notifications": {
-      "title": "Notifications"
+      "title": "Notifications",
+      "noNotifications": "No notifications yet",
+      "markAllRead": "Mark All as Read",
+      "deleteAll": "Delete All",
+      "newNotification": "New Notification",
+      "createNotification": "Create Notification"
     }
   }
 }
