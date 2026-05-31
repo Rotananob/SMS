@@ -48,10 +48,11 @@ export default function CoursesPage({ addToast }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: isNaN(value) ? value : parseInt(value)
-    }));
+    if (['credits', 'semester', 'max_students'].includes(name)) {
+      setFormData(prev => ({ ...prev, [name]: parseInt(value) || 0 }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {

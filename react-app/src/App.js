@@ -10,6 +10,8 @@ import AttendancePage from './pages/AttendancePage';
 import GradesPage from './pages/GradesPage';
 import ReportsPage from './pages/ReportsPage';
 import NotificationsPage from './pages/NotificationsPage';
+import SettingsPage from './pages/SettingsPage';
+import StudentPortalPage from './pages/StudentPortalPage';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import Toast from './components/Toast';
@@ -24,6 +26,7 @@ function AppContent() {
   const [toasts, setToasts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isGuestView, setIsGuestView] = useState(false);
 
   // Monitor Firebase authentication state
   useEffect(() => {
@@ -107,9 +110,11 @@ function AppContent() {
         return <ReportsPage />;
       case 'notifications':
         return <NotificationsPage addToast={addToast} />;
+      case 'settings':
+        return <SettingsPage user={user} addToast={addToast} />;
       case 'dashboard':
       default:
-        return <DashboardPage />;
+        return <DashboardPage onPageChange={setCurrentPage} />;
     }
   };
 
@@ -124,8 +129,12 @@ function AppContent() {
     );
   }
 
+  if (isGuestView) {
+    return <StudentPortalPage onBackToLogin={() => setIsGuestView(false)} />;
+  }
+
   if (!isLoggedIn) {
-    return <LoginPage onLoginSuccess={handleLogin} />;
+    return <LoginPage onLoginSuccess={handleLogin} onGuestAccess={() => setIsGuestView(true)} />;
   }
 
   return (
@@ -143,6 +152,7 @@ function AppContent() {
           pageTitle={getPageTitle()} 
           user={user} 
           onLogout={handleLogout}
+          onPageChange={setCurrentPage}
           onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
           addToast={addToast}
         />

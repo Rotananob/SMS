@@ -10,7 +10,8 @@
     "attendance": "Attendance",
     "grades": "Grades",
     "reports": "Reports",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "settings": "Settings"
   },
   "buttons": {
     "signIn": "Sign In",
@@ -125,6 +126,12 @@
       "deleteAll": "Delete All",
       "newNotification": "New Notification",
       "createNotification": "Create Notification"
+    },
+    "settings": {
+      "title": "Settings",
+      "profile": "Profile Settings",
+      "security": "Security & Account",
+      "preferences": "Preferences"
     }
   }
 }

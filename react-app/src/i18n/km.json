@@ -10,7 +10,8 @@
     "attendance": "វត្តមាន",
     "grades": "ពិន្ទុ",
     "reports": "របាយការណ៍",
-    "notifications": "ការជូនដំណឹង"
+    "notifications": "ការជូនដំណឹង",
+    "settings": "ការកំណត់"
   },
   "buttons": {
     "signIn": "ចូល",
@@ -133,6 +134,12 @@
       "deleteAll": "លុបទាំងអស់",
       "newNotification": "ការជូនដំណឹងថ្មី",
       "createNotification": "បង្កើតការជូនដំណឹង"
+    },
+    "settings": {
+      "title": "ការកំណត់",
+      "profile": "ការកំណត់ប្រវត្តិរូប",
+      "security": "សុវត្ថិភាព",
+      "preferences": "ចំណូលចិត្ត"
     }
   }
 }

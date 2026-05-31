@@ -44,7 +44,11 @@ export default function GradesPage({ addToast }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: parseFloat(value) || 0 }));
+    if (['student_id', 'course_id'].includes(name)) {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: parseFloat(value) || 0 }));
+    }
   };
 
   const handleSubmit = async (e) => {

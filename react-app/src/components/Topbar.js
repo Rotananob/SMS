@@ -5,7 +5,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import PasswordChangeModal from './PasswordChangeModal';
 import '../index.css';
 
-export default function Topbar({ pageTitle, user, onLogout, onToggleSidebar, addToast }) {
+export default function Topbar({ pageTitle, user, onLogout, onPageChange, onToggleSidebar, addToast }) {
   const [notifCount, setNotifCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
@@ -26,7 +26,9 @@ export default function Topbar({ pageTitle, user, onLogout, onToggleSidebar, add
   };
 
   const handleSettings = () => {
-    setShowPasswordModal(true);
+    if (onPageChange) {
+      onPageChange('settings');
+    }
   };
 
   const handleLogout = () => {
@@ -148,7 +150,15 @@ export default function Topbar({ pageTitle, user, onLogout, onToggleSidebar, add
           <i className="fas fa-sign-out-alt"></i>
         </button>
 
-        <div className="avatar" title={user?.email}>{getInitial(user?.email)}</div>
+        <div 
+          className="avatar" 
+          title={user?.email || 'Profile'} 
+          onClick={() => {
+            if (onPageChange) onPageChange('settings');
+          }}
+        >
+          {getInitial(user?.email)}
+        </div>
       </div>
 
       {/* Password Change Modal */}

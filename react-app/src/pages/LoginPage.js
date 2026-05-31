@@ -37,7 +37,7 @@ const TEAM = [
   { name: 'Phy Sophorn',    role: 'Member',    avatar: 'PS', isLead: false },
 ];
 
-export default function LoginPage({ onLoginSuccess }) {
+export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
   const { t } = useLanguage();
 
   /* ── form state ── */
@@ -128,8 +128,9 @@ export default function LoginPage({ onLoginSuccess }) {
           </div>
 
           {/* Title */}
-          <h1 className="login-hero-title">
-            Student&nbsp;Management<br />System
+          <h1 className="login-hero-title" style={{ fontFamily: "'Dongrek', sans-serif" }}>
+            YOUNG SMS<br />
+            <span style={{ fontSize: '1.5rem', fontWeight: 500 }}>Student Management</span>
           </h1>
 
           {/* Subtitle */}
@@ -205,93 +206,60 @@ export default function LoginPage({ onLoginSuccess }) {
 
             {/* Full name (register only) */}
             {isRegistering && (
-              <div className="form-group lf-slide-in">
-                <label htmlFor="fullName">Full Name</label>
+              <div className="form-group lf-slide-in" style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+                <i className="fas fa-shield-alt" style={{ fontSize: '3rem', color: 'var(--danger)', marginBottom: '1rem' }}></i>
+                <h3 style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Registration Closed</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.5' }}>
+                  For security and system integrity, public registration for Staff & Administrator accounts has been disabled. <br/><br/>
+                  Please contact your system administrator to have an account provisioned for you.
+                </p>
+              </div>
+            )}
+
+            {/* Email (Login only) */}
+            {!isRegistering && (
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
                 <div className="lf-input-wrap">
-                  <i className="fas fa-user lf-input-icon" />
+                  <i className="fas fa-envelope lf-input-icon" />
                   <input
-                    id="fullName"
-                    type="text"
+                    id="email"
+                    type="email"
                     className="lf-input"
-                    placeholder="e.g. John Smith"
-                    value={fullName}
-                    onChange={e => setFullName(e.target.value)}
-                    autoComplete="name"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    autoComplete="email"
                     required
                   />
                 </div>
               </div>
             )}
 
-            {/* Email */}
-            <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <div className="lf-input-wrap">
-                <i className="fas fa-envelope lf-input-icon" />
-                <input
-                  id="email"
-                  type="email"
-                  className="lf-input"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  autoComplete="email"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <div className="lf-input-wrap">
-                <i className="fas fa-lock lf-input-icon" />
-                <input
-                  id="password"
-                  type={showPwd ? 'text' : 'password'}
-                  className="lf-input has-toggle"
-                  placeholder={isRegistering ? 'Min. 6 characters' : 'Enter your password'}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  autoComplete={isRegistering ? 'new-password' : 'current-password'}
-                  required
-                />
-                <button
-                  type="button"
-                  className="lf-pwd-toggle"
-                  onClick={() => setShowPwd(v => !v)}
-                  aria-label={showPwd ? 'Hide password' : 'Show password'}
-                  tabIndex={-1}
-                >
-                  <i className={showPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
-                </button>
-              </div>
-            </div>
-
-            {/* Confirm password (register only) */}
-            {isRegistering && (
-              <div className="form-group lf-slide-in">
-                <label htmlFor="confirmPwd">Confirm Password</label>
+            {/* Password (Login only) */}
+            {!isRegistering && (
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
                 <div className="lf-input-wrap">
                   <i className="fas fa-lock lf-input-icon" />
                   <input
-                    id="confirmPwd"
-                    type={showConfirmPwd ? 'text' : 'password'}
+                    id="password"
+                    type={showPwd ? 'text' : 'password'}
                     className="lf-input has-toggle"
-                    placeholder="Repeat your password"
-                    value={confirmPwd}
-                    onChange={e => setConfirmPwd(e.target.value)}
-                    autoComplete="new-password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    autoComplete="current-password"
                     required
                   />
                   <button
                     type="button"
                     className="lf-pwd-toggle"
-                    onClick={() => setShowConfirmPwd(v => !v)}
-                    aria-label="Toggle confirm password visibility"
+                    onClick={() => setShowPwd(v => !v)}
+                    aria-label={showPwd ? 'Hide password' : 'Show password'}
                     tabIndex={-1}
                   >
-                    <i className={showConfirmPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
+                    <i className={showPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
                   </button>
                 </div>
               </div>
@@ -328,25 +296,39 @@ export default function LoginPage({ onLoginSuccess }) {
             )}
 
             {/* Submit */}
-            <button
-              id="login-submit-btn"
-              type="submit"
-              className="lf-submit"
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <span className="lf-spinner" />
-                  {isRegistering ? 'Creating account…' : 'Signing in…'}
-                </>
-              ) : (
-                <>
-                  {isRegistering ? 'Create Account' : 'Sign In'}
-                  <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }} />
-                </>
-              )}
-            </button>
+            {!isRegistering && (
+              <button
+                id="login-submit-btn"
+                type="submit"
+                className="lf-submit"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="lf-spinner" />
+                    Signing in…
+                  </>
+                ) : (
+                  <>
+                    Sign In
+                    <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }} />
+                  </>
+                )}
+              </button>
+            )}
           </form>
+
+          {/* Public Portal Button */}
+          <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+            <button 
+              type="button" 
+              className="btn btn-secondary" 
+              style={{ width: '100%', padding: '0.75rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', background: 'rgba(99,102,241,0.1)', color: 'var(--primary)', border: '1px solid rgba(99,102,241,0.2)' }}
+              onClick={onGuestAccess}
+            >
+              <i className="fas fa-globe"></i> Access Public Portal (Read-Only)
+            </button>
+          </div>
 
           {/* Divider */}
           <div className="lf-divider">or</div>

@@ -72,7 +72,7 @@ export const studentService = {
       });
       await pushNotification({
         title: 'Student Added',
-        message: `New student "${studentData.name || studentData.fullName || 'Unknown'}" has been added to the system.`,
+        message: `New student "${studentData.full_name || studentData.name || 'Unknown'}" has been added to the system.`,
         type: 'success',
         category: 'student',
         icon: 'fas fa-user-plus',
@@ -92,7 +92,7 @@ export const studentService = {
       });
       await pushNotification({
         title: 'Student Updated',
-        message: `Student record for "${studentData.name || studentData.fullName || id}" has been updated.`,
+        message: `Student record for "${studentData.full_name || studentData.name || id}" has been updated.`,
         type: 'info',
         category: 'student',
         icon: 'fas fa-user-edit',
