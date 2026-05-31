@@ -1,0 +1,113 @@
+{
+  "app": {
+    "title": "Student Management System",
+    "tagline": "Sign in to your account"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "students": "Students",
+    "courses": "Courses",
+    "attendance": "Attendance",
+    "grades": "Grades",
+    "reports": "Reports",
+    "notifications": "Notifications"
+  },
+  "buttons": {
+    "signIn": "Sign In",
+    "register": "Register",
+    "logout": "Logout",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "addStudent": "Add Student",
+    "addCourse": "Add Course",
+    "markAttendance": "Mark Attendance",
+    "addGrade": "Add Grade",
+    "newNotification": "New Notification",
+    "send": "Send",
+    "refresh": "Refresh",
+    "settings": "Settings",
+    "language": "Language"
+  },
+  "forms": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "studentId": "Student ID",
+    "code": "Code",
+    "name": "Name",
+    "credits": "Credits",
+    "semester": "Semester",
+    "room": "Room",
+    "maxStudents": "Max Students",
+    "instructor": "Instructor",
+    "student": "Student",
+    "course": "Course",
+    "date": "Date",
+    "status": "Status",
+    "note": "Note",
+    "assignment": "Assignment",
+    "midterm": "Midterm",
+    "final": "Final",
+    "total": "Total",
+    "title": "Title",
+    "message": "Message",
+    "target": "Target",
+    "phone": "Phone",
+    "major": "Major",
+    "year": "Year"
+  },
+  "messages": {
+    "welcome": "Welcome!",
+    "loginSuccess": "Login successful!",
+    "logoutSuccess": "Logged out successfully",
+    "registrationSuccess": "Registration successful! You can now login.",
+    "createSuccess": "Created successfully",
+    "updateSuccess": "Updated successfully",
+    "deleteSuccess": "Deleted successfully",
+    "error": "Error",
+    "loading": "Loading...",
+    "noData": "No data found",
+    "confirmDelete": "Are you sure?"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Dashboard",
+      "totalStudents": "Total Students",
+      "totalCourses": "Total Courses",
+      "enrollments": "Enrollments",
+      "averageScore": "Average Score",
+      "attendanceRate": "Attendance Rate"
+    },
+    "students": {
+      "title": "Students",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "statusActive": "Active",
+      "statusInactive": "Inactive"
+    },
+    "courses": {
+      "title": "Courses"
+    },
+    "attendance": {
+      "title": "Attendance",
+      "present": "Present",
+      "absent": "Absent",
+      "late": "Late"
+    },
+    "grades": {
+      "title": "Grades",
+      "letter": "Letter"
+    },
+    "reports": {
+      "title": "Reports",
+      "coursePerformance": "Course Performance"
+    },
+    "notifications": {
+      "title": "Notifications"
+    }
+  }
+}

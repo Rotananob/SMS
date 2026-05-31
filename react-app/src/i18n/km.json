@@ -1,0 +1,113 @@
+{
+  "app": {
+    "title": "ប្រព័ន្ធគ្រប់គ្រងសិស្ស",
+    "tagline": "ចូលទៅក្នុងគណនីរបស់អ្នក"
+  },
+  "nav": {
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "students": "សិស្ស",
+    "courses": "វគ្គ",
+    "attendance": "ឃ្នាប់វត្មាន",
+    "grades": "ពិន្ទុ",
+    "reports": "របាយការណ៍",
+    "notifications": "ការជូនដំណឹង"
+  },
+  "buttons": {
+    "signIn": "ចូល",
+    "register": "ចុះឈ្មោះ",
+    "logout": "ចាកចេញ",
+    "create": "បង្កើត",
+    "update": "更新",
+    "delete": "លុប",
+    "cancel": "បោះបង់",
+    "save": "រក្សាទុក",
+    "addStudent": "បន្ថែមសិស្ស",
+    "addCourse": "បន្ថែមវគ្គ",
+    "markAttendance": "ធានាវត្មាន",
+    "addGrade": "បន្ថែមពិន្ទុ",
+    "newNotification": "ការជូនដំណឹងថ្មី",
+    "send": "ផ្ញើ",
+    "refresh": "ធ្វើឱ្យថ្មី",
+    "settings": "ការកំណត់",
+    "language": "ភាសា"
+  },
+  "forms": {
+    "email": "អ៊ីមែល",
+    "password": "ពាក្យសម្ងាត់",
+    "confirmPassword": "បញ្ជាក់ពាក្យសម្ងាត់",
+    "fullName": "ឈ្មោះពេញលេញ",
+    "studentId": "លេខសិស្ស",
+    "code": "លេខកូដ",
+    "name": "ឈ្មោះ",
+    "credits": "ឯកតាបង្រៀន",
+    "semester": "ស័ក្រសប្តាហ៍",
+    "room": "បន្ទប់",
+    "maxStudents": "សិស្សលេខរ៉ាម",
+    "instructor": "គ្រូបង្រៀន",
+    "student": "សិស្ស",
+    "course": "វគ្គ",
+    "date": "ថ្ងៃខែឆ្នាំ",
+    "status": "ស្ថានភាព",
+    "note": "ចំណាំ",
+    "assignment": "ការងារផ្ទះ",
+    "midterm": "ពាក់កណ្តាលឆមាស",
+    "final": "ចុងក្រោយ",
+    "total": "សរុប",
+    "title": "ចំណងជើង",
+    "message": "សារ",
+    "target": "គោលដៅ",
+    "phone": "ទូរស័ព្ទ",
+    "major": "មជ្ឈដ្ឋាន",
+    "year": "ឆ្នាំ"
+  },
+  "messages": {
+    "welcome": "សូមស្វាគមន៍!",
+    "loginSuccess": "ចូលលេងដោយជោគជ័យ!",
+    "logoutSuccess": "ចាកចេញដោយជោគជ័យ",
+    "registrationSuccess": "ចុះឈ្មោះដោយជោគជ័យ! អ្នកអាចចូលបានឥឡូវនេះ។",
+    "createSuccess": "បង្កើតដោយជោគជ័យ",
+    "updateSuccess": "ធ្វើឱ្យប្រែប្រួលដោយជោគជ័យ",
+    "deleteSuccess": "លុបដោយជោគជ័យ",
+    "error": "កំហុស",
+    "loading": "កំពុងផ្ទុក...",
+    "noData": "មិនមានទិន្នន័យ",
+    "confirmDelete": "តើអ្នកប្រាកដថាឬ?"
+  },
+  "pages": {
+    "dashboard": {
+      "title": "ផ្ទាំងគ្រប់គ្រង",
+      "totalStudents": "សិស្សលេខសរុប",
+      "totalCourses": "វគ្គលេខសរុប",
+      "enrollments": "ការចុះឈ្មោះ",
+      "averageScore": "ពិន្ទុលេខមធ្យម",
+      "attendanceRate": "អត្រាវត្មាន"
+    },
+    "students": {
+      "title": "សិស្ស",
+      "genderMale": "ប្រុស",
+      "genderFemale": "ស្រី",
+      "statusActive": "សកម្ម",
+      "statusInactive": "អសកម្ម"
+    },
+    "courses": {
+      "title": "វគ្គ"
+    },
+    "attendance": {
+      "title": "ឃ្នាប់វត្មាន",
+      "present": "ឡើងវរ",
+      "absent": "អវត្មាន",
+      "late": "យឺត"
+    },
+    "grades": {
+      "title": "ពិន្ទុ",
+      "letter": "លិខិត"
+    },
+    "reports": {
+      "title": "របាយការណ៍",
+      "coursePerformance": "ការងារវគ្គ"
+    },
+    "notifications": {
+      "title": "ការជូនដំណឹង"
+    }
+  }
+}

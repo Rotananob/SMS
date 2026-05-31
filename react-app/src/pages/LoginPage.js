@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { authAPI } from '../api';
+import React, { useState } from 'react';
+import { authService } from '../authService';
 import '../index.css';
 
 export default function LoginPage({ onLoginSuccess }) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,11 +17,21 @@ export default function LoginPage({ onLoginSuccess }) {
     setLoading(true);
 
     try {
-      const response = await authAPI.login(username, password);
-      localStorage.setItem('jwt_token', response.data.token);
-      onLoginSuccess(response.data);
+      if (isRegistering) {
+        if (password !== confirmPassword) {
+          setError('Passwords do not match');
+          setLoading(false);
+          return;
+        }
+        const userCredential = await authService.signup(email, password);
+        // Optionally: you can create a user profile in Firestore here
+        onLoginSuccess(userCredential.user);
+      } else {
+        const userCredential = await authService.login(email, password);
+        onLoginSuccess(userCredential.user);
+      }
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      setError(err.message || (isRegistering ? 'Registration failed' : 'Login failed'));
     } finally {
       setLoading(false);
     }
@@ -35,19 +48,34 @@ export default function LoginPage({ onLoginSuccess }) {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <div className="input-icon">
-              <i className="fas fa-user"></i>
+              <i className="fas fa-envelope"></i>
               <input
-                type="text"
-                id="username"
-                placeholder="Enter username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                id="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
           </div>
+          {isRegistering && (
+            <div className="form-group">
+              <label htmlFor="fullName">Full Name</label>
+              <div className="input-icon">
+                <i className="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="fullName"
+                  placeholder="Your full name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <div className="input-icon">
@@ -62,14 +90,36 @@ export default function LoginPage({ onLoginSuccess }) {
               />
             </div>
           </div>
+          {isRegistering && (
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <div className="input-icon">
+                <i className="fas fa-lock"></i>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+          )}
           {error && <div className="alert alert-danger">{error}</div>}
           <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-            <span>{loading ? 'Signing In...' : 'Sign In'}</span>
+            <span>{loading ? (isRegistering ? 'Creating...' : 'Signing In...') : (isRegistering ? 'Register' : 'Sign In')}</span>
             <i className="fas fa-arrow-right"></i>
           </button>
         </form>
 
-        <p className="login-hint">Default: <strong>admin</strong> / <strong>admin123</strong></p>
+        <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+          <button className="link-btn" onClick={() => { setIsRegistering(!isRegistering); setError(''); }}>
+            {isRegistering ? 'Already have an account? Sign in' : "Don't have an account? Register"}
+          </button>
+        </div>
+
+        <p className="login-hint">Use your Firebase email/password</p>
       </div>
     </div>
   );
