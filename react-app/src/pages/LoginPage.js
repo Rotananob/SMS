@@ -1,37 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { authService } from '../authService';
-import '../index.css';
+import { useLanguage } from '../i18n/LanguageContext';
+import '../styles/Login.css';
+
+/* ─── Firebase error → friendly message ─── */
+const getErrorMessage = (errorCode, isRegistering, t) => {
+  const map = {
+    'auth/user-not-found':        'No account found with this email.',
+    'auth/wrong-password':        'Incorrect password. Please try again.',
+    'auth/email-already-in-use':  'This email is already registered.',
+    'auth/weak-password':         'Password must be at least 6 characters.',
+    'auth/invalid-email':         'Please enter a valid email address.',
+    'auth/too-many-requests':     'Too many attempts. Please try again later.',
+    'auth/network-request-failed':'Connection error. Check your internet.',
+    'auth/invalid-credential':    'Invalid email or password.',
+  };
+  return map[errorCode] || (isRegistering ? 'Registration failed. Please try again.' : 'Sign in failed. Please try again.');
+};
+
+/* ─── Floating particle list ─── */
+const PARTICLES = Array.from({ length: 10 });
+
+/* ─── Feature highlights on left panel ─── */
+const FEATURES = [
+  { icon: 'fas fa-users', label: 'Manage students, courses & grades', cls: 'fi-purple' },
+  { icon: 'fas fa-chart-bar', label: 'Real-time analytics & reports', cls: 'fi-cyan' },
+  { icon: 'fas fa-shield-alt', label: 'Secure Firebase authentication', cls: 'fi-green' },
+];
+
+/* ─── Team members ─── */
+const TEAM = [
+  { name: 'Rotana NOB',       role: 'Lead Developer',  avatar: 'RN' },
+  { name: 'RA Piseth',        role: 'Frontend Dev',    avatar: 'RP' },
+  { name: 'Vuth Sreyneang',   role: 'UI/UX Designer',  avatar: 'VS' },
+  { name: 'Rothana Choung',   role: 'Backend Dev',     avatar: 'RC' },
+  { name: 'Phy Sophorn',      role: 'Database Admin',  avatar: 'PS' },
+];
 
 export default function LoginPage({ onLoginSuccess }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(false);
+  const { t } = useLanguage();
 
+  /* ── form state ── */
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [email, setEmail]                 = useState('');
+  const [password, setPassword]           = useState('');
+  const [confirmPwd, setConfirmPwd]       = useState('');
+  const [fullName, setFullName]           = useState('');
+  const [remember, setRemember]           = useState(false);
+  const [showPwd, setShowPwd]             = useState(false);
+  const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+
+  /* ── feedback state ── */
+  const [error,   setError]   = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  /* ── switch login / register ── */
+  const switchMode = useCallback((toRegister) => {
+    setIsRegistering(toRegister);
+    setError(''); setSuccess('');
+    setEmail(''); setPassword('');
+    setConfirmPwd(''); setFullName('');
+    setShowPwd(false); setShowConfirmPwd(false);
+  }, []);
+
+  /* ── submit ── */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
+    setError(''); setSuccess('');
 
+    if (isRegistering) {
+      if (!fullName.trim()) { setError('Please enter your full name.'); return; }
+      if (password !== confirmPwd) { setError('Passwords do not match.'); return; }
+      if (password.length < 6)     { setError('Password must be at least 6 characters.'); return; }
+    }
+
+    setLoading(true);
     try {
       if (isRegistering) {
-        if (password !== confirmPassword) {
-          setError('Passwords do not match');
-          setLoading(false);
-          return;
-        }
-        const userCredential = await authService.signup(email, password);
-        // Optionally: you can create a user profile in Firestore here
-        onLoginSuccess(userCredential.user);
+        const cred = await authService.signup(email, password);
+        setSuccess('Account created! Signing you in…');
+        setTimeout(() => onLoginSuccess(cred.user), 1400);
       } else {
-        const userCredential = await authService.login(email, password);
-        onLoginSuccess(userCredential.user);
+        const cred = await authService.login(email, password);
+        setSuccess('Welcome back! Redirecting…');
+        setTimeout(() => onLoginSuccess(cred.user), 1200);
       }
     } catch (err) {
-      setError(err.message || (isRegistering ? 'Registration failed' : 'Login failed'));
+      setError(getErrorMessage(err.code, isRegistering, t));
     } finally {
       setLoading(false);
     }
@@ -39,87 +95,315 @@ export default function LoginPage({ onLoginSuccess }) {
 
   return (
     <div className="login-screen">
-      <div className="login-card">
-        <div className="login-logo">
-          <i className="fas fa-graduation-cap"></i>
-        </div>
-        <h1 className="login-title">Student Management System</h1>
-        <p className="login-sub">Sign in to your account</p>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <div className="input-icon">
-              <i className="fas fa-envelope"></i>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+      {/* ═══════════════════════════════════════════
+          LEFT PANEL — animated hero
+      ═══════════════════════════════════════════ */}
+      <div className="login-left">
+        {/* Ambient orbs */}
+        <div className="orb orb-1" />
+        <div className="orb orb-2" />
+        <div className="orb orb-3" />
+        <div className="orb orb-4" />
+
+        {/* Rising particles */}
+        <div className="particles">
+          {PARTICLES.map((_, i) => <span key={i} className="particle" />)}
+        </div>
+
+        {/* Grid overlay */}
+        <div className="login-grid" />
+
+        {/* Hero content */}
+        <div className="login-hero">
+          {/* Badge */}
+          <div className="login-hero-badge">
+            <span className="badge-dot" />
+            v2.0 — Firebase Powered
           </div>
-          {isRegistering && (
-            <div className="form-group">
-              <label htmlFor="fullName">Full Name</label>
-              <div className="input-icon">
-                <i className="fas fa-user"></i>
-                <input
-                  type="text"
-                  id="fullName"
-                  placeholder="Your full name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
+
+          {/* Icon */}
+          <div className="login-hero-icon">
+            <i className="fas fa-graduation-cap" />
+          </div>
+
+          {/* Title */}
+          <h1 className="login-hero-title">
+            Student&nbsp;Management<br />System
+          </h1>
+
+          {/* Subtitle */}
+          <p className="login-hero-subtitle">
+            A unified platform for tracking students,
+            managing courses, recording attendance,
+            and generating insightful reports — all in one place.
+          </p>
+
+          {/* Feature list */}
+          <div className="login-features">
+            {FEATURES.map((f, i) => (
+              <div key={i} className="login-feature">
+                <div className={`login-feature-icon ${f.cls}`}>
+                  <i className={f.icon} />
+                </div>
+                <span className="login-feature-text">{f.label}</span>
               </div>
-            </div>
-          )}
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <div className="input-icon">
-              <i className="fas fa-lock"></i>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+            ))}
           </div>
-          {isRegistering && (
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════
+          RIGHT PANEL — form
+      ═══════════════════════════════════════════ */}
+      <div className="login-right">
+        <div className="login-card">
+
+          {/* Card header */}
+          <div className="login-form-header">
+            <div className="login-mode-tag">
+              {isRegistering ? '✦ Create Account' : '✦ Secure Login'}
+            </div>
+            <h2 className="login-title">
+              {isRegistering ? 'Get Started' : 'Welcome Back'}
+            </h2>
+            <p className="login-sub">
+              {isRegistering
+                ? 'Create your administrator account below.'
+                : 'Sign in to access the dashboard.'}
+            </p>
+          </div>
+
+          {/* Mode toggle tabs */}
+          <div className="login-tabs" role="tablist">
+            <button
+              id="tab-signin"
+              role="tab"
+              aria-selected={!isRegistering}
+              className={`login-tab ${!isRegistering ? 'active' : ''}`}
+              onClick={() => switchMode(false)}
+              type="button"
+            >
+              <i className="fas fa-sign-in-alt" style={{ marginRight: '0.4rem', fontSize: '0.85rem' }} />
+              Sign In
+            </button>
+            <button
+              id="tab-register"
+              role="tab"
+              aria-selected={isRegistering}
+              className={`login-tab ${isRegistering ? 'active' : ''}`}
+              onClick={() => switchMode(true)}
+              type="button"
+            >
+              <i className="fas fa-user-plus" style={{ marginRight: '0.4rem', fontSize: '0.85rem' }} />
+              Register
+            </button>
+          </div>
+
+          {/* ── Form ── */}
+          <form id="login-form" onSubmit={handleSubmit} className="login-form" noValidate>
+
+            {/* Full name (register only) */}
+            {isRegistering && (
+              <div className="form-group lf-slide-in">
+                <label htmlFor="fullName">Full Name</label>
+                <div className="lf-input-wrap">
+                  <i className="fas fa-user lf-input-icon" />
+                  <input
+                    id="fullName"
+                    type="text"
+                    className="lf-input"
+                    placeholder="e.g. John Smith"
+                    value={fullName}
+                    onChange={e => setFullName(e.target.value)}
+                    autoComplete="name"
+                    required
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Email */}
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <div className="input-icon">
-                <i className="fas fa-lock"></i>
+              <label htmlFor="email">Email Address</label>
+              <div className="lf-input-wrap">
+                <i className="fas fa-envelope lf-input-icon" />
                 <input
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  id="email"
+                  type="email"
+                  className="lf-input"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  autoComplete="email"
                   required
                 />
               </div>
             </div>
-          )}
-          {error && <div className="alert alert-danger">{error}</div>}
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-            <span>{loading ? (isRegistering ? 'Creating...' : 'Signing In...') : (isRegistering ? 'Register' : 'Sign In')}</span>
-            <i className="fas fa-arrow-right"></i>
-          </button>
-        </form>
 
-        <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-          <button className="link-btn" onClick={() => { setIsRegistering(!isRegistering); setError(''); }}>
-            {isRegistering ? 'Already have an account? Sign in' : "Don't have an account? Register"}
-          </button>
+            {/* Password */}
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="lf-input-wrap">
+                <i className="fas fa-lock lf-input-icon" />
+                <input
+                  id="password"
+                  type={showPwd ? 'text' : 'password'}
+                  className="lf-input has-toggle"
+                  placeholder={isRegistering ? 'Min. 6 characters' : 'Enter your password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  autoComplete={isRegistering ? 'new-password' : 'current-password'}
+                  required
+                />
+                <button
+                  type="button"
+                  className="lf-pwd-toggle"
+                  onClick={() => setShowPwd(v => !v)}
+                  aria-label={showPwd ? 'Hide password' : 'Show password'}
+                  tabIndex={-1}
+                >
+                  <i className={showPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm password (register only) */}
+            {isRegistering && (
+              <div className="form-group lf-slide-in">
+                <label htmlFor="confirmPwd">Confirm Password</label>
+                <div className="lf-input-wrap">
+                  <i className="fas fa-lock lf-input-icon" />
+                  <input
+                    id="confirmPwd"
+                    type={showConfirmPwd ? 'text' : 'password'}
+                    className="lf-input has-toggle"
+                    placeholder="Repeat your password"
+                    value={confirmPwd}
+                    onChange={e => setConfirmPwd(e.target.value)}
+                    autoComplete="new-password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="lf-pwd-toggle"
+                    onClick={() => setShowConfirmPwd(v => !v)}
+                    aria-label="Toggle confirm password visibility"
+                    tabIndex={-1}
+                  >
+                    <i className={showConfirmPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Remember me / Forgot (login only) */}
+            {!isRegistering && (
+              <div className="lf-extras">
+                <label className="lf-remember">
+                  <input
+                    type="checkbox"
+                    id="remember-me"
+                    checked={remember}
+                    onChange={e => setRemember(e.target.checked)}
+                  />
+                  <span>Remember me</span>
+                </label>
+                <button type="button" className="lf-forgot">Forgot password?</button>
+              </div>
+            )}
+
+            {/* Alerts */}
+            {error && (
+              <div id="login-error" className="lf-alert lf-alert-danger" role="alert">
+                <i className="fas fa-exclamation-circle" />
+                <span>{error}</span>
+              </div>
+            )}
+            {success && (
+              <div id="login-success" className="lf-alert lf-alert-success" role="alert">
+                <i className="fas fa-check-circle" />
+                <span>{success}</span>
+              </div>
+            )}
+
+            {/* Submit */}
+            <button
+              id="login-submit-btn"
+              type="submit"
+              className="lf-submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="lf-spinner" />
+                  {isRegistering ? 'Creating account…' : 'Signing in…'}
+                </>
+              ) : (
+                <>
+                  {isRegistering ? 'Create Account' : 'Sign In'}
+                  <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }} />
+                </>
+              )}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="lf-divider">or</div>
+
+          {/* Toggle link */}
+          <div className="lf-toggle-wrap">
+            <span className="lf-toggle-text">
+              {isRegistering ? 'Already have an account? ' : "Don't have an account? "}
+            </span>
+            <button
+              id="toggle-mode-btn"
+              type="button"
+              className="lf-toggle-btn"
+              onClick={() => switchMode(!isRegistering)}
+            >
+              {isRegistering ? 'Sign In' : 'Register'}
+            </button>
+          </div>
+
+          {/* Demo hint */}
+          <p className="lf-hint">
+            <i className="fas fa-info-circle" />
+            Use your Firebase credentials to access the system.
+          </p>
+
+          {/* ── Team Credit Section ── */}
+          <div className="lf-credit-section">
+            <div className="lf-credit-header">
+              <span className="lf-credit-line" />
+              <span className="lf-credit-label">
+                <i className="fas fa-code" /> Built by
+              </span>
+              <span className="lf-credit-line" />
+            </div>
+            <p className="lf-credit-author">
+              <i className="fas fa-star lf-star-icon" />
+              Rotana NOB
+              <i className="fas fa-star lf-star-icon" />
+            </p>
+            <p className="lf-credit-uni">
+              Asia Euro University · Year 3 Semester 2 · CS
+            </p>
+
+            <div className="lf-team-grid">
+              {TEAM.map((m, i) => (
+                <div key={i} className="lf-team-member" title={m.role}>
+                  <div className={`lf-team-avatar lf-av-${i}`}>{m.avatar}</div>
+                  <div className="lf-team-info">
+                    <span className="lf-team-name">{m.name}</span>
+                    <span className="lf-team-role">{m.role}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
-
-        <p className="login-hint">Use your Firebase email/password</p>
       </div>
     </div>
   );

@@ -182,6 +182,16 @@ export const enrollmentService = {
 // ATTENDANCE
 // ========================
 export const attendanceService = {
+  getAll: async () => {
+    try {
+      const snapshot = await getDocs(collection(db, 'attendance'));
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      console.error('Error fetching attendance:', error);
+      throw error;
+    }
+  },
+
   getByStudent: async (studentId) => {
     try {
       const q = query(
@@ -221,6 +231,16 @@ export const attendanceService = {
 // GRADES
 // ========================
 export const gradeService = {
+  getAll: async () => {
+    try {
+      const snapshot = await getDocs(collection(db, 'grades'));
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      console.error('Error fetching grades:', error);
+      throw error;
+    }
+  },
+
   getByStudent: async (studentId) => {
     try {
       const q = query(

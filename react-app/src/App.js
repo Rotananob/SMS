@@ -23,6 +23,7 @@ function AppContent() {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [toasts, setToasts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Monitor Firebase authentication state
   useEffect(() => {
@@ -134,9 +135,17 @@ function AppContent() {
         onPageChange={setCurrentPage}
         onLogout={handleLogout}
         user={user}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
       <div className="main-wrapper">
-        <Topbar pageTitle={getPageTitle()} user={user} onLogout={handleLogout} />
+        <Topbar 
+          pageTitle={getPageTitle()} 
+          user={user} 
+          onLogout={handleLogout}
+          onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          addToast={addToast}
+        />
         <main className="main-content">
           {renderPage()}
         </main>
