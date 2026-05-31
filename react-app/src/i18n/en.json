@@ -134,4 +134,44 @@
       "preferences": "Preferences"
     }
   }
+  ,
+  "login": {
+    "modeTagCreate": "✦ Create Account",
+    "modeTagLogin": "✦ Secure Login",
+    "titleWelcome": "Welcome Back",
+    "titleRegister": "Get Started",
+    "subWelcome": "Sign in to access the dashboard.",
+    "subRegister": "Create your administrator account below.",
+    "tabs": {
+      "signIn": "Sign In",
+      "register": "Register"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "Enter your password"
+    },
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signingIn": "Signing in…",
+    "guestAccess": "Access Public Portal (Read-Only)",
+    "or": "or",
+    "toggle": {
+      "noAccount": "Don't have an account? ",
+      "haveAccount": "Already have an account? ",
+      "signIn": "Sign In",
+      "register": "Register"
+    },
+    "errors": {
+      "enterFullName": "Please enter your full name.",
+      "passwordMismatch": "Passwords do not match.",
+      "passwordShort": "Password must be at least 6 characters."
+    },
+    "success": {
+      "created": "Account created! Signing you in…",
+      "welcome": "Welcome back! Redirecting…"
+    },
+    "showPwd": "Show password",
+    "hidePwd": "Hide password",
+    "demoHint": "Use your Firebase credentials to access the system."
+  }
 }

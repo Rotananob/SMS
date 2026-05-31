@@ -142,4 +142,44 @@
       "preferences": "ចំណូលចិត្ត"
     }
   }
+  ,
+  "login": {
+    "modeTagCreate": "✦ ចុះឈ្មោះ",
+    "modeTagLogin": "✦ ចូលដោយសុវត្ថិភាព",
+    "titleWelcome": "សូមស្វាគមន៍វិញ",
+    "titleRegister": "ចាប់ផ្តើម",
+    "subWelcome": "ចូលដើម្បីប្រើផ្ទាំងគ្រប់គ្រង។",
+    "subRegister": "បង្កើតគណនីអ្នកគ្រប់គ្រងរបស់អ្នកនៅខាងក្រោម។",
+    "tabs": {
+      "signIn": "ចូល",
+      "register": "ចុះឈ្មោះ"
+    },
+    "placeholders": {
+      "email": "you@example.com",
+      "password": "បញ្ចូលពាក្យសម្ងាត់"
+    },
+    "rememberMe": "ចងចាំខ្ញុំ",
+    "forgotPassword": "ភ្លេចពាក្យសម្ងាត់?",
+    "signingIn": "កំពុងចូល...",
+    "guestAccess": "ចូលទៅព័រទាលសាធារណៈ (អានតែ sahaja)",
+    "or": "ឬ",
+    "toggle": {
+      "noAccount": "មិនទាន់មានគណនី? ",
+      "haveAccount": "មានគណនីរួចហើយ? ",
+      "signIn": "ចូល",
+      "register": "ចុះឈ្មោះ"
+    },
+    "errors": {
+      "enterFullName": "សូមបញ្ចូលឈ្មោះពេញរបស់អ្នក។",
+      "passwordMismatch": "ពាក្យសម្ងាត់មិនត្រូវគ្នា។",
+      "passwordShort": "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ 6 តួអក្សរ។"
+    },
+    "success": {
+      "created": "បានបង្កើតគណនី! កំពុងចូល...",
+      "welcome": "សូមស្វាគមន៍! កំពុងបើកផ្ទាំងគ្រប់គ្រង..."
+    },
+    "showPwd": "បង្ហាញពាក្យសម្ងាត់",
+    "hidePwd": "លាក់ពាក្យសម្ងាត់",
+    "demoHint": "ប្រើអ៊ីមែល និងពាក្យសម្ងាត់ Firebase របស់អ្នក"
+  }
 }

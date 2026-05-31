@@ -38,7 +38,7 @@ const TEAM = [
 ];
 
 export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
-  const { t } = useLanguage();
+  const { t, toggleLanguage, language } = useLanguage();
 
   /* ── form state ── */
   const [isRegistering, setIsRegistering] = useState(false);
@@ -70,20 +70,20 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
     setError(''); setSuccess('');
 
     if (isRegistering) {
-      if (!fullName.trim()) { setError('Please enter your full name.'); return; }
-      if (password !== confirmPwd) { setError('Passwords do not match.'); return; }
-      if (password.length < 6)     { setError('Password must be at least 6 characters.'); return; }
+      if (!fullName.trim()) { setError(t('login.errors.enterFullName')); return; }
+      if (password !== confirmPwd) { setError(t('login.errors.passwordMismatch')); return; }
+      if (password.length < 6)     { setError(t('login.errors.passwordShort')); return; }
     }
 
     setLoading(true);
     try {
       if (isRegistering) {
         const cred = await authService.signup(email, password);
-        setSuccess('Account created! Signing you in…');
+        setSuccess(t('login.success.created'));
         setTimeout(() => onLoginSuccess(cred.user), 1400);
       } else {
         const cred = await authService.login(email, password);
-        setSuccess('Welcome back! Redirecting…');
+        setSuccess(t('login.success.welcome'));
         setTimeout(() => onLoginSuccess(cred.user), 1200);
       }
     } catch (err) {
@@ -162,16 +162,19 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
 
           {/* Card header */}
           <div className="login-form-header">
-            <div className="login-mode-tag">
-              {isRegistering ? '✦ Create Account' : '✦ Secure Login'}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="login-mode-tag">
+                {isRegistering ? t('login.modeTagCreate') : t('login.modeTagLogin')}
+              </div>
+              <button type="button" className="lf-lang-btn" onClick={toggleLanguage} aria-label={t('buttons.language')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontWeight: 600 }}>
+                {language === 'en' ? 'EN' : 'ខ្មែរ'}
+              </button>
             </div>
             <h2 className="login-title">
-              {isRegistering ? 'Get Started' : 'Welcome Back'}
+              {isRegistering ? t('login.titleRegister') : t('login.titleWelcome')}
             </h2>
             <p className="login-sub">
-              {isRegistering
-                ? 'Create your administrator account below.'
-                : 'Sign in to access the dashboard.'}
+              {isRegistering ? t('login.subRegister') : t('login.subWelcome')}
             </p>
           </div>
 
@@ -186,7 +189,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
               type="button"
             >
               <i className="fas fa-sign-in-alt" style={{ marginRight: '0.4rem', fontSize: '0.85rem' }} />
-              Sign In
+              {t('login.tabs.signIn')}
             </button>
             <button
               id="tab-register"
@@ -197,7 +200,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
               type="button"
             >
               <i className="fas fa-user-plus" style={{ marginRight: '0.4rem', fontSize: '0.85rem' }} />
-              Register
+                {t('login.tabs.register')}
             </button>
           </div>
 
@@ -219,14 +222,14 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             {/* Email (Login only) */}
             {!isRegistering && (
               <div className="form-group">
-                <label htmlFor="email">Email Address</label>
+                <label htmlFor="email">{t('forms.email')}</label>
                 <div className="lf-input-wrap">
                   <i className="fas fa-envelope lf-input-icon" />
                   <input
                     id="email"
                     type="email"
                     className="lf-input"
-                    placeholder="you@example.com"
+                    placeholder={t('login.placeholders.email')}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     autoComplete="email"
@@ -239,14 +242,14 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             {/* Password (Login only) */}
             {!isRegistering && (
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">{t('forms.password')}</label>
                 <div className="lf-input-wrap">
                   <i className="fas fa-lock lf-input-icon" />
                   <input
                     id="password"
                     type={showPwd ? 'text' : 'password'}
                     className="lf-input has-toggle"
-                    placeholder="Enter your password"
+                    placeholder={t('login.placeholders.password')}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     autoComplete="current-password"
@@ -256,7 +259,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
                     type="button"
                     className="lf-pwd-toggle"
                     onClick={() => setShowPwd(v => !v)}
-                    aria-label={showPwd ? 'Hide password' : 'Show password'}
+                    aria-label={showPwd ? t('login.hidePwd') : t('login.showPwd')}
                     tabIndex={-1}
                   >
                     <i className={showPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
@@ -275,9 +278,9 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
                     checked={remember}
                     onChange={e => setRemember(e.target.checked)}
                   />
-                  <span>Remember me</span>
+                  <span>{t('login.rememberMe')}</span>
                 </label>
-                <button type="button" className="lf-forgot">Forgot password?</button>
+                <button type="button" className="lf-forgot">{t('login.forgotPassword')}</button>
               </div>
             )}
 
@@ -306,11 +309,11 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
                 {loading ? (
                   <>
                     <span className="lf-spinner" />
-                    Signing in…
+                    {t('login.signingIn')}
                   </>
                 ) : (
                   <>
-                    Sign In
+                    {t('login.tabs.signIn')}
                     <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }} />
                   </>
                 )}
@@ -326,17 +329,17 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
               style={{ width: '100%', padding: '0.75rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', background: 'rgba(99,102,241,0.1)', color: 'var(--primary)', border: '1px solid rgba(99,102,241,0.2)' }}
               onClick={onGuestAccess}
             >
-              <i className="fas fa-globe"></i> Access Public Portal (Read-Only)
+              <i className="fas fa-globe"></i> {t('login.guestAccess')}
             </button>
           </div>
 
           {/* Divider */}
-          <div className="lf-divider">or</div>
+          <div className="lf-divider">{t('login.or')}</div>
 
           {/* Toggle link */}
           <div className="lf-toggle-wrap">
             <span className="lf-toggle-text">
-              {isRegistering ? 'Already have an account? ' : "Don't have an account? "}
+              {isRegistering ? t('login.toggle.haveAccount') : t('login.toggle.noAccount')}
             </span>
             <button
               id="toggle-mode-btn"
@@ -344,14 +347,14 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
               className="lf-toggle-btn"
               onClick={() => switchMode(!isRegistering)}
             >
-              {isRegistering ? 'Sign In' : 'Register'}
+              {isRegistering ? t('login.toggle.signIn') : t('login.toggle.register')}
             </button>
           </div>
 
           {/* Demo hint */}
           <p className="lf-hint">
             <i className="fas fa-info-circle" />
-            Use your Firebase credentials to access the system.
+            {t('login.demoHint')}
           </p>
 
           {/* ── Team Credit Section ── */}
