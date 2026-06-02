@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { authService } from '../authService';
 import PasswordChangeModal from '../components/PasswordChangeModal';
 import '../index.css';
 
-export default function SettingsPage({ user, addToast }) {
+export default function SettingsPage({ user, addToast, onUserUpdate }) {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('profile');
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -11,16 +12,46 @@ export default function SettingsPage({ user, addToast }) {
     name: user?.displayName || 'Admin User',
     email: user?.email || '',
     phone: '',
-    role: 'Administrator'
+    role: user?.role || 'Administrator'
   });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load user profile from Firebase
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        name: user.displayName || user.email?.split('@')[0] || 'Admin User',
+        email: user.email || '',
+        phone: user.phone || '',
+        role: user.role || user.email?.includes('admin') ? 'Administrator' : 'User'
+      });
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
   };
 
-  const handleSaveProfile = (e) => {
+  const handleSaveProfile = async (e) => {
     e.preventDefault();
-    addToast(t('messages.updateSuccess'), 'success');
+    setIsLoading(true);
+    try {
+      // TODO: Update user profile in Firestore
+      // For now, just show success
+      if (onUserUpdate) {
+        onUserUpdate({
+          ...user,
+          displayName: profileData.name,
+          phone: profileData.phone
+        });
+      }
+      if (addToast) addToast(t('messages.updateSuccess') || '✅ Profile updated successfully', 'success');
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      if (addToast) addToast('Error updating profile', 'error');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -65,7 +96,7 @@ export default function SettingsPage({ user, addToast }) {
                   {profileData.email ? profileData.email.charAt(0).toUpperCase() : 'U'}
                 </div>
                 <div>
-                  <button className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}>
+                  <button type="button" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }} onClick={() => addToast('Avatar upload coming soon', 'info')}>
                     <i className="fas fa-camera"></i> Change Avatar
                   </button>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>Recommended size: 256x256px</p>
@@ -108,8 +139,8 @@ export default function SettingsPage({ user, addToast }) {
                 </div>
                 
                 <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'flex-end' }}>
-                  <button type="submit" className="btn btn-primary">
-                    <i className="fas fa-save"></i> {t('buttons.save') || 'Save Changes'}
+                  <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                    <i className="fas fa-save"></i> {isLoading ? 'Saving...' : (t('buttons.save') || 'Save Changes')}
                   </button>
                 </div>
               </form>
@@ -131,7 +162,11 @@ export default function SettingsPage({ user, addToast }) {
               <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
                 <h4 style={{ marginBottom: '0.5rem', fontSize: '1rem', color: 'var(--danger)' }}>Danger Zone</h4>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>Once you delete your account, there is no going back. Please be certain.</p>
-                <button className="btn btn-danger" onClick={() => window.confirm('Are you absolutely sure you want to delete your account?')}>
+                <button type="button" className="btn btn-danger" onClick={() => {
+                  if (window.confirm('Are you absolutely sure? This action cannot be undone.')) {
+                    if (addToast) addToast('Account deletion coming soon', 'warning');
+                  }
+                }}>
                   <i className="fas fa-trash-alt"></i> Delete Account
                 </button>
               </div>

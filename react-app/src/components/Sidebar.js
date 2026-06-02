@@ -1,6 +1,9 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import '../index.css';
+import YoungPOSLogo from '../images/YoungPOS_LOGO.png';
+import RotanaElearningLogo from '../images/rotana_elerning_logo.jpg';
+import TrollChatbotLogo from '../images/Troll_Chatbot_logo.jpg';
 
 export default function Sidebar({ currentPage, onPageChange, onLogout, user, isOpen, onClose }) {
   const { t } = useLanguage();
@@ -12,6 +15,7 @@ export default function Sidebar({ currentPage, onPageChange, onLogout, user, isO
     { name: 'grades', label: t('nav.grades'), icon: 'fas fa-star' },
     { name: 'reports', label: t('nav.reports'), icon: 'fas fa-file-alt' },
     { name: 'notifications', label: t('nav.notifications'), icon: 'fas fa-bell' },
+    { name: 'admin', label: 'Admin', icon: 'fas fa-shield-alt' },
     { name: 'settings', label: t('nav.settings') || 'Settings', icon: 'fas fa-cog' },
   ];
 
@@ -40,8 +44,8 @@ export default function Sidebar({ currentPage, onPageChange, onLogout, user, isO
       )}
       <aside className={`sidebar ${isOpen ? 'active' : ''}`}>
         <div className="sidebar-header" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '1.5rem 1rem' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
-            <img src="/logo.png" alt="YOUNG SMS Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ width: '80px', height: '80px', borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-md)', backgroundColor: 'rgba(255,255,255,0.1)' }}>
+            <img src="/logo.png" alt="YOUNG SMS Logo" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '5px' }} />
           </div>
           <span className="sidebar-title" style={{ fontFamily: "'Dongrek', sans-serif", fontSize: '1.5rem', marginTop: '0.5rem', textAlign: 'center' }}>YOUNG SMS</span>
         </div>
@@ -70,19 +74,25 @@ export default function Sidebar({ currentPage, onPageChange, onLogout, user, isO
           <ul>
             <li>
               <a href="https://www.youngpos.app/" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ padding: '0.75rem 1.25rem', marginBottom: '0.25rem' }}>
-                <i className="fas fa-store" style={{ color: '#10b981' }}></i>
+                <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={YoungPOSLogo} alt="YOUNG POS" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }} />
+                </div>
                 <span>YOUNG POS</span>
               </a>
             </li>
             <li>
               <a href="https://rotana-elearningg.web.app/" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ padding: '0.75rem 1.25rem', marginBottom: '0.25rem' }}>
-                <i className="fas fa-laptop-code" style={{ color: '#6366f1' }}></i>
+                <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={RotanaElearningLogo} alt="E-Learning" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }} />
+                </div>
                 <span>E-Learning</span>
               </a>
             </li>
             <li>
               <a href="https://troll-setec-chatbot.web.app/" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ padding: '0.75rem 1.25rem', marginBottom: '0.25rem' }}>
-                <i className="fas fa-robot" style={{ color: '#f59e0b' }}></i>
+                <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={TrollChatbotLogo} alt="Troll Chatbot" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
                 <span>Troll Chatbot</span>
               </a>
             </li>

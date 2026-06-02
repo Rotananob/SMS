@@ -2,6 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { studentService, gradeService, attendanceService, courseService } from '../firestoreService';
 import '../index.css';
 
+// Helper to convert Firestore Timestamp to readable date
+const formatDate = (dateObj) => {
+  if (!dateObj) return 'N/A';
+  
+  // If it's already a string, return it
+  if (typeof dateObj === 'string') return dateObj;
+  
+  // If it has seconds and nanoseconds (Firestore Timestamp)
+  if (dateObj.seconds !== undefined) {
+    const date = new Date(dateObj.seconds * 1000);
+    return date.toISOString().split('T')[0];
+  }
+  
+  // If it's a Date object
+  if (dateObj instanceof Date) {
+    return dateObj.toISOString().split('T')[0];
+  }
+  
+  return 'N/A';
+};
+
 export default function StudentsPage({ addToast }) {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
@@ -462,7 +483,7 @@ export default function StudentsPage({ addToast }) {
                     <tbody>
                       {studentDetails.payments.map((p, i) => (
                         <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                          <td style={{ padding: '1rem' }}>{p.date}</td>
+                          <td style={{ padding: '1rem' }}>{formatDate(p.date)}</td>
                           <td style={{ padding: '1rem', color: 'var(--info)' }}>{p.receipt}</td>
                           <td style={{ padding: '1rem' }}>{p.method}</td>
                           <td style={{ padding: '1rem', textAlign: 'right', fontWeight: 'bold', color: 'var(--success)' }}>{p.amount}</td>

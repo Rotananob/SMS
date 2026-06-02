@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { authService } from '../authService';
 import { useLanguage } from '../i18n/LanguageContext';
 import '../styles/Login.css';
@@ -28,13 +28,13 @@ const FEATURES = [
   { icon: 'fas fa-shield-alt', label: 'Secure Firebase authentication', cls: 'fi-green' },
 ];
 
-/* ─── Team members ─── */
+/* ─── Team members with images ─── */
 const TEAM = [
-  { name: 'Rotana NOB',     role: 'Developer', avatar: 'RN', isLead: true  },
-  { name: 'RA Piseth',      role: 'Member',    avatar: 'RP', isLead: false },
-  { name: 'Vuth Sreyneang', role: 'Member',    avatar: 'VS', isLead: false },
-  { name: 'Rothana Choung', role: 'Member',    avatar: 'RC', isLead: false },
-  { name: 'Phy Sophorn',    role: 'Member',    avatar: 'PS', isLead: false },
+  { name: 'Rotana NOB',     role: 'Developer', avatar: 'RN', image: require('../images/Rotana_NOB.jpg'), isLead: true  },
+  { name: 'RA Piseth',      role: 'Member',    avatar: 'RP', image: require('../images/Ra_Piseth.jpg'), isLead: false },
+  { name: 'Vuth Sreyneang', role: 'Member',    avatar: 'VS', image: require('../images/Vuth_Sreyneang.jpg'), isLead: false },
+  { name: 'Rothana Choung', role: 'Member',    avatar: 'RC', image: require('../images/Choung_Rothana.jpg'), isLead: false },
+  { name: 'Phy Sophorn',    role: 'Member',    avatar: 'PS', image: require('../images/Phy_Sophorn.jpg'), isLead: false },
 ];
 
 export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
@@ -49,15 +49,33 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
   const [remember, setRemember]           = useState(false);
   const [showPwd, setShowPwd]             = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail]     = useState('');
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [showRegisterWarning, setShowRegisterWarning] = useState(false);
 
   /* ── feedback state ── */
   const [error,   setError]   = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
+  /* ── Load saved email on mount ── */
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('sms_remembered_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRemember(true);
+    }
+  }, []);
+
   /* ── switch login / register ── */
   const switchMode = useCallback((toRegister) => {
-    setIsRegistering(toRegister);
+    if (toRegister) {
+      // Show warning modal instead of switching mode
+      setShowRegisterWarning(true);
+      return;
+    }
+    setIsRegistering(false);
     setError(''); setSuccess('');
     setEmail(''); setPassword('');
     setConfirmPwd(''); setFullName('');
@@ -83,6 +101,18 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
         setTimeout(() => onLoginSuccess(cred.user), 1400);
       } else {
         const cred = await authService.login(email, password);
+        
+        // Handle Remember Me
+        if (remember) {
+          localStorage.setItem('sms_remembered_email', email);
+        } else {
+          localStorage.removeItem('sms_remembered_email');
+        }
+        
+        // Save auth token for public view access
+        localStorage.setItem('sms_auth_token', cred.user.uid);
+        localStorage.setItem('sms_student_id', cred.user.uid);
+        
         setSuccess(t('login.success.welcome'));
         setTimeout(() => onLoginSuccess(cred.user), 1200);
       }
@@ -90,6 +120,27 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
       setError(getErrorMessage(err.code, isRegistering, t));
     } finally {
       setLoading(false);
+    }
+  };
+
+  /* ── Forgot Password Handler ── */
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!forgotEmail.trim()) {
+      setError(t('login.errors.enterEmail') || 'Please enter your email');
+      return;
+    }
+
+    setForgotLoading(true);
+    try {
+      await authService.sendPasswordReset(forgotEmail);
+      setSuccess(t('login.success.resetSent') || '✅ Password reset link sent to your email!');
+      setForgotEmail('');
+      setTimeout(() => setShowForgotPassword(false), 2000);
+    } catch (err) {
+      setError(err.message || 'Failed to send reset email. Please try again.');
+    } finally {
+      setForgotLoading(false);
     }
   };
 
@@ -103,6 +154,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
         {/* Ambient orbs */}
         <div className="orb orb-1" />
         <div className="orb orb-2" />
+
         <div className="orb orb-3" />
         <div className="orb orb-4" />
 
@@ -207,62 +259,95 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
           {/* ── Form ── */}
           <form id="login-form" onSubmit={handleSubmit} className="login-form" noValidate>
 
-            {/* Full name (register only) */}
-            {isRegistering && (
-              <div className="form-group lf-slide-in" style={{ textAlign: 'center', padding: '2rem 1rem' }}>
-                <i className="fas fa-shield-alt" style={{ fontSize: '3rem', color: 'var(--danger)', marginBottom: '1rem' }}></i>
-                <h3 style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Registration Closed</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.5' }}>
-                  For security and system integrity, public registration for Staff & Administrator accounts has been disabled. <br/><br/>
-                  Please contact your system administrator to have an account provisioned for you.
-                </p>
-              </div>
-            )}
-
-            {/* Email (Login only) */}
-            {!isRegistering && (
-              <div className="form-group">
-                <label htmlFor="email">{t('forms.email')}</label>
+            {/* Full name (register only) - DISABLED */}
+            {false && isRegistering && (
+              <div className="form-group" style={{ display: 'none' }}>
+                <label htmlFor="fullName">{t('forms.fullName') || 'Full Name'}</label>
                 <div className="lf-input-wrap">
-                  <i className="fas fa-envelope lf-input-icon" />
+                  <i className="fas fa-user lf-input-icon" />
                   <input
-                    id="email"
-                    type="email"
+                    id="fullName"
+                    type="text"
                     className="lf-input"
-                    placeholder={t('login.placeholders.email')}
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    autoComplete="email"
+                    placeholder="Your Full Name"
+                    value={fullName}
+                    onChange={e => setFullName(e.target.value)}
+                    autoComplete="name"
                     required
                   />
                 </div>
               </div>
             )}
 
-            {/* Password (Login only) */}
-            {!isRegistering && (
-              <div className="form-group">
-                <label htmlFor="password">{t('forms.password')}</label>
+            {/* Email (Both modes) */}
+            <div className="form-group">
+              <label htmlFor="email">{t('forms.email')}</label>
+              <div className="lf-input-wrap">
+                <i className="fas fa-envelope lf-input-icon" />
+                <input
+                  id="email"
+                  type="email"
+                  className="lf-input"
+                  placeholder={t('login.placeholders.email')}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  autoComplete="email"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password (Both modes) */}
+            <div className="form-group">
+              <label htmlFor="password">{t('forms.password')}</label>
+              <div className="lf-input-wrap">
+                <i className="fas fa-lock lf-input-icon" />
+                <input
+                  id="password"
+                  type={showPwd ? 'text' : 'password'}
+                  className="lf-input has-toggle"
+                  placeholder={t('login.placeholders.password')}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  autoComplete={isRegistering ? 'new-password' : 'current-password'}
+                  required
+                />
+                <button
+                  type="button"
+                  className="lf-pwd-toggle"
+                  onClick={() => setShowPwd(v => !v)}
+                  aria-label={showPwd ? t('login.hidePwd') : t('login.showPwd')}
+                  tabIndex={-1}
+                >
+                  <i className={showPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password (register only) - DISABLED */}
+            {false && isRegistering && (
+              <div className="form-group" style={{ display: 'none' }}>
+                <label htmlFor="confirmPassword">{t('forms.confirmPassword') || 'Confirm Password'}</label>
                 <div className="lf-input-wrap">
                   <i className="fas fa-lock lf-input-icon" />
                   <input
-                    id="password"
-                    type={showPwd ? 'text' : 'password'}
+                    id="confirmPassword"
+                    type={showConfirmPwd ? 'text' : 'password'}
                     className="lf-input has-toggle"
-                    placeholder={t('login.placeholders.password')}
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    autoComplete="current-password"
+                    placeholder="Confirm Password"
+                    value={confirmPwd}
+                    onChange={e => setConfirmPwd(e.target.value)}
+                    autoComplete="new-password"
                     required
                   />
                   <button
                     type="button"
                     className="lf-pwd-toggle"
-                    onClick={() => setShowPwd(v => !v)}
-                    aria-label={showPwd ? t('login.hidePwd') : t('login.showPwd')}
+                    onClick={() => setShowConfirmPwd(v => !v)}
+                    aria-label="Toggle confirm password visibility"
                     tabIndex={-1}
                   >
-                    <i className={showPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
+                    <i className={showConfirmPwd ? 'fas fa-eye-slash' : 'fas fa-eye'} />
                   </button>
                 </div>
               </div>
@@ -280,7 +365,13 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
                   />
                   <span>{t('login.rememberMe')}</span>
                 </label>
-                <button type="button" className="lf-forgot">{t('login.forgotPassword')}</button>
+                <button 
+                  type="button" 
+                  className="lf-forgot"
+                  onClick={() => setShowForgotPassword(true)}
+                >
+                  {t('login.forgotPassword')}
+                </button>
               </div>
             )}
 
@@ -299,26 +390,24 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             )}
 
             {/* Submit */}
-            {!isRegistering && (
-              <button
-                id="login-submit-btn"
-                type="submit"
-                className="lf-submit"
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <span className="lf-spinner" />
-                    {t('login.signingIn')}
-                  </>
-                ) : (
-                  <>
-                    {t('login.tabs.signIn')}
-                    <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }} />
-                  </>
-                )}
-              </button>
-            )}
+            <button
+              id="login-submit-btn"
+              type="submit"
+              className="lf-submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="lf-spinner" />
+                  {isRegistering ? (t('login.registering') || 'Creating Account...') : t('login.signingIn')}
+                </>
+              ) : (
+                <>
+                  {isRegistering ? (t('login.tabs.register') || 'Create Account') : t('login.tabs.signIn')}
+                  <i className="fas fa-arrow-right" style={{ fontSize: '0.9rem' }} />
+                </>
+              )}
+            </button>
           </form>
 
           {/* Public Portal Button */}
@@ -336,8 +425,8 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
           {/* Divider */}
           <div className="lf-divider">{t('login.or')}</div>
 
-          {/* Toggle link */}
-          <div className="lf-toggle-wrap">
+          {/* Toggle link - HIDDEN (Registration disabled) */}
+          <div className="lf-toggle-wrap" style={{ display: 'none' }}>
             <span className="lf-toggle-text">
               {isRegistering ? t('login.toggle.haveAccount') : t('login.toggle.noAccount')}
             </span>
@@ -351,11 +440,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             </button>
           </div>
 
-          {/* Demo hint */}
-          <p className="lf-hint">
-            <i className="fas fa-info-circle" />
-            {t('login.demoHint')}
-          </p>
+          {/* Demo hint - removed */}
 
           {/* ── Team Credit Section ── */}
           <div className="lf-credit-section">
@@ -383,14 +468,12 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
               {TEAM.map((m, i) => (
                 <div key={i} className={`lf-team-member${m.isLead ? ' lf-team-lead' : ''}`}>
                   <div className={`lf-team-avatar lf-av-${i}`}>
-                    {m.isLead
-                      ? <i className="fas fa-crown" />
-                      : <i className="fas fa-user" />}
+                    <img src={m.image} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                   </div>
                   <div className="lf-team-info">
                     <span className="lf-team-name">{m.name}</span>
                     <span className="lf-team-role">
-                      <i className={m.isLead ? 'fas fa-code' : 'fas fa-users'} />
+                      <i className={m.isLead ? 'fas fa-star' : 'fas fa-user'} />
                       {m.role}
                     </span>
                   </div>
@@ -400,6 +483,281 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
           </div>
 
         </div>
+
+        {/* Forgot Password Modal */}
+        {showForgotPassword && (
+          <div className="modal-backdrop" onClick={() => setShowForgotPassword(false)} style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999
+          }}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{
+              background: 'var(--panel-bg)',
+              borderRadius: 'var(--radius)',
+              padding: '2rem',
+              maxWidth: '400px',
+              width: '90%',
+              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <h3 style={{ margin: 0, color: 'var(--text-main)' }}>🔐 Reset Password</h3>
+                <button
+                  type="button"
+                  onClick={() => setShowForgotPassword(false)}
+                  style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--text-muted)' }}
+                >
+                  ✕
+                </button>
+              </div>
+
+              <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+                Enter your email address and we'll send you a link to reset your password.
+              </p>
+
+              <form onSubmit={handleForgotPassword}>
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-main)', fontSize: '0.9rem', fontWeight: 500 }}>
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={forgotEmail}
+                    onChange={(e) => setForgotEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: 'var(--radius)',
+                      background: 'var(--bg-color)',
+                      color: 'var(--text-main)',
+                      fontSize: '1rem',
+                      boxSizing: 'border-box'
+                    }}
+                    required
+                  />
+                </div>
+
+                {error && (
+                  <div style={{
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    color: 'var(--danger)',
+                    padding: '0.75rem',
+                    borderRadius: 'var(--radius)',
+                    marginBottom: '1rem',
+                    fontSize: '0.85rem',
+                    display: 'flex',
+                    gap: '0.5rem'
+                  }}>
+                    <i className="fas fa-exclamation-circle" style={{ marginTop: '2px' }} />
+                    <span>{error}</span>
+                  </div>
+                )}
+
+                {success && (
+                  <div style={{
+                    background: 'rgba(34, 197, 94, 0.1)',
+                    color: 'var(--success)',
+                    padding: '0.75rem',
+                    borderRadius: 'var(--radius)',
+                    marginBottom: '1rem',
+                    fontSize: '0.85rem',
+                    display: 'flex',
+                    gap: '0.5rem'
+                  }}>
+                    <i className="fas fa-check-circle" style={{ marginTop: '2px' }} />
+                    <span>{success}</span>
+                  </div>
+                )}
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(false)}
+                    style={{
+                      flex: 1,
+                      padding: '0.75rem',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: 'var(--radius)',
+                      background: 'transparent',
+                      color: 'var(--text-main)',
+                      cursor: 'pointer',
+                      fontSize: '0.9rem',
+                      fontWeight: 500
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={forgotLoading}
+                    style={{
+                      flex: 1,
+                      padding: '0.75rem',
+                      border: 'none',
+                      borderRadius: 'var(--radius)',
+                      background: 'var(--primary)',
+                      color: 'white',
+                      cursor: forgotLoading ? 'not-allowed' : 'pointer',
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                      opacity: forgotLoading ? 0.6 : 1
+                    }}
+                  >
+                    {forgotLoading ? '⏳ Sending...' : '📧 Send Reset Link'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Registration Disabled Security Warning Modal */}
+        {showRegisterWarning && (
+          <div className="modal-backdrop" onClick={() => setShowRegisterWarning(false)} style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10000
+          }}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{
+              background: '#ffffff',
+              borderRadius: '12px',
+              padding: '2.5rem',
+              maxWidth: '420px',
+              width: '90%',
+              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
+              textAlign: 'center'
+            }}>
+              {/* Warning Icon */}
+              <div style={{
+                width: '70px',
+                height: '70px',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1.5rem',
+                boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)'
+              }}>
+                <i className="fas fa-lock" style={{ fontSize: '2rem', color: 'white' }} />
+              </div>
+
+              <h2 style={{
+                color: '#1e293b',
+                fontSize: '1.5rem',
+                fontWeight: '800',
+                marginBottom: '0.5rem',
+                margin: '0 0 0.5rem'
+              }}>
+                <i className="fas fa-lock" style={{ marginRight: '0.5rem' }} />
+                Registration Disabled
+              </h2>
+
+              <p style={{
+                color: '#64748b',
+                fontSize: '0.95rem',
+                lineHeight: '1.6',
+                marginBottom: '1.25rem',
+                margin: '0 0 1.25rem'
+              }}>
+                Registration is currently <strong>disabled for security and data protection</strong> reasons.
+              </p>
+
+              <div style={{
+                background: '#fee2e2',
+                border: '1px solid #fecaca',
+                borderRadius: '8px',
+                padding: '1rem',
+                marginBottom: '1.5rem',
+                textAlign: 'left'
+              }}>
+                <p style={{
+                  margin: 0,
+                  color: '#dc2626',
+                  fontSize: '0.85rem',
+                  fontWeight: '500',
+                  display: 'flex',
+                  gap: '0.5rem',
+                  alignItems: 'flex-start'
+                }}>
+                  <i className="fas fa-exclamation-triangle" style={{ marginTop: '2px', flexShrink: 0 }} />
+                  <span>Only authorized administrators can create new accounts.</span>
+                </p>
+              </div>
+
+              <div style={{
+                background: '#eff6ff',
+                border: '1px solid #bfdbfe',
+                borderRadius: '8px',
+                padding: '1rem',
+                marginBottom: '1.5rem',
+                textAlign: 'left'
+              }}>
+                <p style={{
+                  margin: '0 0 0.5rem',
+                  color: '#0369a1',
+                  fontSize: '0.85rem',
+                  fontWeight: '600'
+                }}>
+                  <i className="fas fa-info-circle" style={{ marginRight: '0.5rem' }} />
+                  If you need an account:
+                </p>
+                <ul style={{
+                  margin: 0,
+                  paddingLeft: '1.25rem',
+                  color: '#0284c7',
+                  fontSize: '0.8rem'
+                }}>
+                  <li>Contact your administrator</li>
+                  <li>Submit an access request form</li>
+                  <li>Provide institutional verification</li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() => setShowRegisterWarning(false)}
+                style={{
+                  width: '100%',
+                  padding: '0.9rem',
+                  background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1a4d7a 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '0.95rem',
+                  fontWeight: '600',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 2px 8px rgba(30, 60, 114, 0.25)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.boxShadow = '0 6px 16px rgba(30, 60, 114, 0.35)';
+                  e.target.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.boxShadow = '0 2px 8px rgba(30, 60, 114, 0.25)';
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                ← Back to Login
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { attendanceService, studentService, courseService } from '../firestoreService';
 import '../index.css';
 
+// Helper to convert Firestore Timestamp to readable date
+const formatDate = (dateObj) => {
+  if (!dateObj) return 'N/A';
+  
+  // If it's already a string, return it
+  if (typeof dateObj === 'string') return dateObj;
+  
+  // If it has seconds and nanoseconds (Firestore Timestamp)
+  if (dateObj.seconds !== undefined) {
+    const date = new Date(dateObj.seconds * 1000);
+    return date.toISOString().split('T')[0];
+  }
+  
+  // If it's a Date object
+  if (dateObj instanceof Date) {
+    return dateObj.toISOString().split('T')[0];
+  }
+  
+  return 'N/A';
+};
+
 export default function AttendancePage({ addToast }) {
   const [attendance, setAttendance] = useState([]);
   const [students, setStudents] = useState([]);
@@ -136,7 +157,7 @@ export default function AttendancePage({ addToast }) {
                 <tr key={record.id}>
                   <td>{students.find(s => s.id === record.student_id)?.full_name || 'Unknown'}</td>
                   <td>{courses.find(c => c.id === record.course_id)?.name || 'Unknown'}</td>
-                  <td>{record.date}</td>
+                  <td>{formatDate(record.date)}</td>
                   <td><span className={`status-badge status-${record.status}`}>{record.status}</span></td>
                   <td>{record.note}</td>
                 </tr>

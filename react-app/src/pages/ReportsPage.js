@@ -21,10 +21,18 @@ export default function ReportsPage({ addToast }) {
 
   const loadReports = async () => {
     try {
+      setLoading(true);
       const students = await studentService.getAll();
       const courses = await courseService.getAll();
       const grades = await gradeService.getAll();
       const attendance = await attendanceService.getAll();
+
+      // Debug log
+      console.log('📊 ReportsPage Data Loaded:');
+      console.log('  Students:', students.length);
+      console.log('  Courses:', courses.length);
+      console.log('  Grades:', grades.length);
+      console.log('  Attendance:', attendance.length);
 
       // Calculate statistics
       const totalGrades = grades.filter(g => g.total).length;
@@ -81,6 +89,11 @@ export default function ReportsPage({ addToast }) {
 
       setCourseStats(courseStatsData);
       setTopStudents(studentAverages);
+      
+      if (addToast && (students.length > 0 || courses.length > 0)) {
+        addToast('✅ Reports updated with real data', 'success');
+      }
+      
       setLoading(false);
     } catch (err) {
       console.error('Error loading reports:', err);
@@ -89,9 +102,61 @@ export default function ReportsPage({ addToast }) {
     }
   };
 
-  const handleExport = (type) => {
-    if (addToast) {
-      addToast(`Exporting ${type} report... (Feature coming soon)`, 'info');
+  const handleExport = async (type) => {
+    try {
+      // Get current data
+      const students = await studentService.getAll();
+      const courses = await courseService.getAll();
+      const grades = await gradeService.getAll();
+      const attendance = await attendanceService.getAll();
+
+      // Create CSV or JSON data
+      let exportData = '';
+      
+      if (type === 'CSV') {
+        // Create CSV format
+        exportData = 'Course,Average Grade,Attendance Rate,Students Enrolled\n';
+        courseStats.forEach(course => {
+          exportData += `"${course.name}","${course.code}","${course.avgGrade}%","${course.attendanceRate}%","${course.students}"\n`;
+        });
+        
+        // Trigger download
+        const blob = new Blob([exportData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `reports-${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      } else if (type === 'JSON') {
+        // Create JSON format
+        exportData = JSON.stringify({
+          generatedAt: new Date().toISOString(),
+          stats: stats,
+          courseStats: courseStats,
+          topStudents: topStudents
+        }, null, 2);
+        
+        // Trigger download
+        const blob = new Blob([exportData], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `reports-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }
+      
+      if (addToast) {
+        addToast(`✅ Report exported as ${type}`, 'success');
+      }
+    } catch (err) {
+      console.error('Export error:', err);
+      if (addToast) addToast('Error exporting report', 'error');
     }
   };
 
@@ -110,11 +175,11 @@ export default function ReportsPage({ addToast }) {
           <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Comprehensive performance and attendance insights.</p>
         </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <button className="btn btn-secondary" onClick={() => handleExport('PDF')} title="Export as PDF">
-            <i className="fas fa-file-pdf"></i> <span className="hide-mobile">Export PDF</span>
+          <button className="btn btn-secondary" onClick={() => handleExport('CSV')} title="Export as CSV">
+            <i className="fas fa-file-csv"></i> <span className="hide-mobile">Export CSV</span>
           </button>
-          <button className="btn btn-secondary" onClick={() => handleExport('Excel')} title="Export as Excel">
-            <i className="fas fa-file-excel"></i> <span className="hide-mobile">Export Excel</span>
+          <button className="btn btn-secondary" onClick={() => handleExport('JSON')} title="Export as JSON">
+            <i className="fas fa-file-code"></i> <span className="hide-mobile">Export JSON</span>
           </button>
           <button className="btn btn-primary" onClick={loadReports}>
             <i className="fas fa-sync-alt"></i> <span className="hide-mobile">Refresh Data</span>

@@ -6,6 +6,7 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   updatePassword,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { auth } from './firebase';
 
@@ -48,6 +49,11 @@ export const authService = {
     const user = auth.currentUser;
     if (!user) throw new Error('No user logged in');
     return updatePassword(user, newPassword);
+  },
+
+  // Send password reset email
+  sendPasswordReset: (email) => {
+    return sendPasswordResetEmail(auth, email);
   },
 };
 

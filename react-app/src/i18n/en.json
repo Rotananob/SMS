@@ -35,6 +35,20 @@
     "quickAction": "Quick Actions",
     "markAllRead": "Mark All as Read"
   },
+  "common": {
+    "logout": "Logout",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "readOnly": "Read-only view. Contact your instructor for changes.",
+    "secureView": "Secure Student Portal",
+    "studentPortal": "Student Portal"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "role": "Role"
+  },
   "forms": {
     "email": "Email",
     "password": "Password",
@@ -164,14 +178,15 @@
     "errors": {
       "enterFullName": "Please enter your full name.",
       "passwordMismatch": "Passwords do not match.",
-      "passwordShort": "Password must be at least 6 characters."
+      "passwordShort": "Password must be at least 6 characters.",
+      "enterEmail": "Please enter your email address"
     },
     "success": {
       "created": "Account created! Signing you in…",
-      "welcome": "Welcome back! Redirecting…"
+      "welcome": "Welcome back! Redirecting…",
+      "resetSent": "✅ Password reset link sent to your email!"
     },
     "showPwd": "Show password",
-    "hidePwd": "Hide password",
-    "demoHint": "Use your Firebase credentials to access the system."
+    "hidePwd": "Hide password"
   }
 }

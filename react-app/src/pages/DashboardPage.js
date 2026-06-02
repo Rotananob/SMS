@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { studentService, courseService, gradeService, attendanceService, notificationService } from '../firestoreService';
 import '../index.css';
+import YoungPOSLogo from '../images/YoungPOS_LOGO.png';
+import TrollChatbotLogo from '../images/Troll_Chatbot_logo.jpg';
+import RotanaElearningLogo from '../images/rotana_elerning_logo.jpg';
 
 export default function DashboardPage({ onPageChange }) {
   const [stats, setStats] = useState({
@@ -216,8 +219,8 @@ export default function DashboardPage({ onPageChange }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
               
               <a href="https://www.youngpos.app/" target="_blank" rel="noopener noreferrer" className="app-card" style={{ display: 'flex', gap: '1rem', padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'var(--transition)', textDecoration: 'none' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0 }}>
-                  <i className="fas fa-store"></i>
+                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0, overflow: 'hidden' }}>
+                  <img src={YoungPOSLogo} alt="YOUNG POS" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} />
                 </div>
                 <div>
                   <h4 style={{ color: 'var(--text-main)', marginBottom: '0.25rem', fontSize: '1rem' }}>YOUNG POS</h4>
@@ -226,8 +229,8 @@ export default function DashboardPage({ onPageChange }) {
               </a>
 
               <a href="https://rotana-elearningg.web.app/" target="_blank" rel="noopener noreferrer" className="app-card" style={{ display: 'flex', gap: '1rem', padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'var(--transition)', textDecoration: 'none' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0 }}>
-                  <i className="fas fa-laptop-code"></i>
+                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0, overflow: 'hidden' }}>
+                  <img src={RotanaElearningLogo} alt="ROTANA E-Learning" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} />
                 </div>
                 <div>
                   <h4 style={{ color: 'var(--text-main)', marginBottom: '0.25rem', fontSize: '1rem' }}>ROTANA E-Learning</h4>
@@ -236,8 +239,8 @@ export default function DashboardPage({ onPageChange }) {
               </a>
 
               <a href="https://troll-setec-chatbot.web.app/" target="_blank" rel="noopener noreferrer" className="app-card" style={{ display: 'flex', gap: '1rem', padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'var(--transition)', textDecoration: 'none' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0 }}>
-                  <i className="fas fa-robot"></i>
+                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0, overflow: 'hidden' }}>
+                  <img src={TrollChatbotLogo} alt="Troll Chatbot" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div>
                   <h4 style={{ color: 'var(--text-main)', marginBottom: '0.25rem', fontSize: '1rem' }}>Troll Chatbot</h4>

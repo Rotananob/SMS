@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { authService } from './authService';
-import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
-import { AlertProvider, useAlert } from './context/AlertContext';
+import { useLanguage } from './i18n/LanguageContext';
+import { useAlert } from './context/AlertContext';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import StudentsPage from './pages/StudentsPage';
@@ -11,13 +11,15 @@ import GradesPage from './pages/GradesPage';
 import ReportsPage from './pages/ReportsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import SettingsPage from './pages/SettingsPage';
+import AdminPage from './pages/AdminPage';
 import StudentPortalPage from './pages/StudentPortalPage';
+import PublicViewPage from './pages/PublicViewPage';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import Toast from './components/Toast';
 import './index.css';
 
-function AppContent() {
+function App() {
   const { t } = useLanguage();
   const { showAlert } = useAlert();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -111,7 +113,9 @@ function AppContent() {
       case 'notifications':
         return <NotificationsPage addToast={addToast} />;
       case 'settings':
-        return <SettingsPage user={user} addToast={addToast} />;
+        return <SettingsPage user={user} addToast={addToast} onUserUpdate={setUser} />;
+      case 'admin':
+        return <AdminPage />;
       case 'dashboard':
       default:
         return <DashboardPage onPageChange={setCurrentPage} />;
@@ -129,10 +133,12 @@ function AppContent() {
     );
   }
 
+  // Student Portal access (requires registration)
   if (isGuestView) {
     return <StudentPortalPage onBackToLogin={() => setIsGuestView(false)} />;
   }
 
+  // Always show login first when not logged in
   if (!isLoggedIn) {
     return <LoginPage onLoginSuccess={handleLogin} onGuestAccess={() => setIsGuestView(true)} />;
   }
@@ -173,16 +179,6 @@ function AppContent() {
         ))}
       </div>
     </div>
-  );
-}
-
-function App() {
-  return (
-    <LanguageProvider>
-      <AlertProvider>
-        <AppContent />
-      </AlertProvider>
-    </LanguageProvider>
   );
 }
 

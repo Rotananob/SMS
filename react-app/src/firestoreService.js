@@ -63,6 +63,20 @@ export const studentService = {
     }
   },
 
+  getById: async (id) => {
+    try {
+      const docSnapshot = await getDoc(doc(db, 'students', id));
+      if (docSnapshot.exists()) {
+        return { id: docSnapshot.id, ...docSnapshot.data() };
+      } else {
+        throw new Error('Student not found');
+      }
+    } catch (error) {
+      console.error('Error fetching student by ID:', error);
+      throw error;
+    }
+  },
+
   create: async (studentData) => {
     try {
       const docRef = await addDoc(collection(db, 'students'), {
