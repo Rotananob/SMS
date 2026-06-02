@@ -171,12 +171,12 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
           {/* Badge */}
           <div className="login-hero-badge">
             <span className="badge-dot" />
-            v2.0 — Firebase Powered
+            v1.0 AEU University Assignment
           </div>
 
           {/* Icon */}
           <div className="login-hero-icon">
-            <i className="fas fa-graduation-cap" />
+            <i className="fas fa-graduation-cap    git push --set-upstream origin Rotana" />
           </div>
 
           {/* Title */}
