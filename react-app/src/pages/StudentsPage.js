@@ -23,12 +23,58 @@ const formatDate = (dateObj) => {
   return 'N/A';
 };
 
+const BATCH_27_STUDENTS = [
+  { full_name: "Cheam Sreypich", student_id: "66899", gender: "Female", major: "CS", year: 3, semester: "2", dob: "13-Jan-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Chhom Chhorpoan", student_id: "65418", gender: "Male", major: "CS", year: 3, semester: "2", dob: "24-Apr-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Choung Rothana", student_id: "66017", gender: "Female", major: "CS", year: 3, semester: "2", dob: "31-Oct-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Chum Makara", student_id: "64265", gender: "Male", major: "CS", year: 3, semester: "2", dob: "17-Jun-2003", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Hasann Sariputin", student_id: "68584", gender: "Male", major: "CS", year: 3, semester: "2", dob: "05-Jun-2002", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Heng Mengly", student_id: "66226", gender: "Male", major: "CS", year: 3, semester: "2", dob: "18-Dec-2004", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Horm Pich", student_id: "66804", gender: "Male", major: "CS", year: 3, semester: "2", dob: "13-May-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Hun Dina", student_id: "64841", gender: "Male", major: "CS", year: 3, semester: "2", dob: "30-Sep-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Khem Makara", student_id: "71308", gender: "Male", major: "CS", year: 3, semester: "2", dob: "05-Jan-2000", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Kim Lyheng", student_id: "64343", gender: "Male", major: "CS", year: 3, semester: "2", dob: "26-Jul-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Korm Chanseyha", student_id: "66338", gender: "Male", major: "CS", year: 3, semester: "2", dob: "23-Aug-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Kouch Chansinh", student_id: "64583", gender: "Male", major: "CS", year: 3, semester: "2", dob: "28-Nov-2003", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Leang Ylong", student_id: "64656", gender: "Male", major: "CS", year: 3, semester: "2", dob: "11-May-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Lim Brosethpanha", student_id: "65373", gender: "Male", major: "CS", year: 3, semester: "2", dob: "04-Aug-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Long Eangtry", student_id: "64817", gender: "Male", major: "CS", year: 3, semester: "2", dob: "05-Jan-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Men Chhorvy", student_id: "65721", gender: "Female", major: "CS", year: 3, semester: "2", dob: "07-Oct-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Mork Sreypov", student_id: "65945", gender: "Female", major: "CS", year: 3, semester: "2", dob: "03-Aug-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Mot Mai", student_id: "71970", gender: "Male", major: "CS", year: 3, semester: "2", dob: "05-Aug-1999", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Net Ranun", student_id: "65468", gender: "Male", major: "CS", year: 3, semester: "2", dob: "15-Apr-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Nhoeb Chandarith", student_id: "64613", gender: "Male", major: "CS", year: 3, semester: "2", dob: "07-Mar-2004", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Nob Rotana", student_id: "72008", gender: "Male", major: "CS", year: 3, semester: "2", dob: "18-Jul-2003", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Nou Sovannak", student_id: "64898", gender: "Male", major: "CS", year: 3, semester: "2", dob: "21-Mar-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Phai Chhaiyi", student_id: "66404", gender: "Male", major: "CS", year: 3, semester: "2", dob: "04-Oct-2004", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Phack Samnang", student_id: "65785", gender: "Male", major: "CS", year: 3, semester: "2", dob: "05-Apr-2002", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Phy Sophorn", student_id: "65613", gender: "Male", major: "CS", year: 3, semester: "2", dob: "25-Feb-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Ra Piseth", student_id: "64537", gender: "Male", major: "CS", year: 3, semester: "2", dob: "29-Aug-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Rith Sreynang", student_id: "71978", gender: "Female", major: "CS", year: 3, semester: "2", dob: "18-Feb-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Sean Vathanak", student_id: "71106", gender: "Male", major: "CS", year: 3, semester: "2", dob: "23-Jan-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Seng Sothy", student_id: "64951", gender: "Male", major: "CS", year: 3, semester: "2", dob: "27-Aug-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Sitha Rany", student_id: "61789", gender: "Female", major: "CS", year: 3, semester: "2", dob: "07-Nov-2001", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Sok Chanvathana", student_id: "71056", gender: "Male", major: "CS", year: 3, semester: "2", dob: "16-May-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Sor Viksal", student_id: "65671", gender: "Male", major: "CS", year: 3, semester: "2", dob: "12-Oct-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Srem Srimchansamphorn", student_id: "66320", gender: "Male", major: "CS", year: 3, semester: "2", dob: "27-Jun-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Sy Bousiv", student_id: "64704", gender: "Male", major: "CS", year: 3, semester: "2", dob: "15-Oct-2005", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Tha Sinat", student_id: "65943", gender: "Female", major: "CS", year: 3, semester: "2", dob: "19-Apr-2004", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Thoeun Siengdav", student_id: "71934", gender: "Female", major: "CS", year: 3, semester: "2", dob: "04-May-2003", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Thor SreyTouch", student_id: "71162", gender: "Female", major: "CS", year: 3, semester: "2", dob: "09-Nov-2002", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Tith Shona", student_id: "65112", gender: "Female", major: "CS", year: 3, semester: "2", dob: "12-Jan-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Tong Sonsamnang", student_id: "66106", gender: "Male", major: "CS", year: 3, semester: "2", dob: "02-Apr-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Touch Mengorn", student_id: "64279", gender: "Male", major: "CS", year: 3, semester: "2", dob: "19-Feb-2000", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" },
+  { full_name: "Vuth Sreyneang", student_id: "65666", gender: "Female", major: "CS", year: 3, semester: "2", dob: "28-Mar-2006", phone: "", tuitionTotal: 1200, tuitionPaid: 0, status: "active" }
+];
+
 export default function StudentsPage({ addToast }) {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importText, setImportText] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null); // Deep info modal
   const [studentDetails, setStudentDetails] = useState(null);
@@ -220,6 +266,53 @@ export default function StudentsPage({ addToast }) {
     });
   };
 
+  const openImportModal = () => {
+    setImportText(JSON.stringify(BATCH_27_STUDENTS, null, 2));
+    setShowImportModal(true);
+  };
+
+  const handleProcessImport = async () => {
+    let parsedData = [];
+    try {
+      parsedData = JSON.parse(importText);
+    } catch (e) {
+      addToast('Invalid JSON format. Please check your data.', 'error');
+      return;
+    }
+
+    if (!Array.isArray(parsedData)) {
+      addToast('Data must be a JSON array.', 'error');
+      return;
+    }
+
+    setLoading(true);
+    let successCount = 0;
+    try {
+      for (const student of parsedData) {
+        // Prevent duplicates
+        const exists = students.find(s => s.student_id === student.student_id);
+        if (!exists) {
+          // ensure enrollment date if not provided
+          if (!student.enrollmentDate) {
+            student.enrollmentDate = new Date().toISOString().split('T')[0];
+          }
+          await studentService.create(student);
+          successCount++;
+        }
+      }
+      
+      if (successCount > 0) {
+        addToast(`Successfully imported ${successCount} students!`, 'success');
+        setShowImportModal(false);
+      } else {
+        addToast(`No new students imported (they may already exist).`, 'info');
+      }
+    } catch (err) {
+      addToast(`Import error: ${err.message}`, 'error');
+    }
+    setLoading(false);
+  };
+
   return (
     <div>
       <div className="page-header">
@@ -228,6 +321,10 @@ export default function StudentsPage({ addToast }) {
           <button className="btn btn-secondary" onClick={handleRefresh} title="Refresh Data">
             <i className="fas fa-sync-alt"></i>
             <span>Refresh</span>
+          </button>
+          <button className="btn" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)', border: '1px solid var(--success)' }} onClick={openImportModal} title="Import Student Data">
+            <i className="fas fa-file-import"></i>
+            <span>Import Student Data</span>
           </button>
           <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
             + {showForm ? 'Cancel' : 'Add Student'}
@@ -497,6 +594,46 @@ export default function StudentsPage({ addToast }) {
 
             <div className="modal-footer" style={{ background: 'var(--panel-bg)' }}>
               <button className="btn btn-secondary" onClick={() => setSelectedStudent(null)}>Close Profile</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* JSON Import Modal */}
+      {showImportModal && (
+        <div className="modal-overlay" onClick={() => setShowImportModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ width: '90%', maxWidth: '800px', background: 'var(--bg-color)', padding: '0' }}>
+            <div className="modal-header" style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ margin: 0, color: 'var(--text-main)', fontSize: '1.5rem' }}><i className="fas fa-file-import"></i> Import Student Data</h2>
+              <button className="modal-close" onClick={() => setShowImportModal(false)}>
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <div className="modal-body" style={{ padding: '1.5rem', background: 'var(--bg-secondary)' }}>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>Paste a JSON array of students below. The text area is pre-filled with the students from the latest Excel data. You can edit it or replace it.</p>
+              <textarea 
+                value={importText} 
+                onChange={(e) => setImportText(e.target.value)}
+                style={{ 
+                  width: '100%', 
+                  height: '350px', 
+                  padding: '1rem', 
+                  fontFamily: 'monospace', 
+                  background: 'var(--panel-bg)', 
+                  color: 'var(--text-main)', 
+                  border: '1px solid var(--border-color)', 
+                  borderRadius: 'var(--radius)',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+
+            <div className="modal-footer" style={{ padding: '1.5rem', background: 'var(--panel-bg)', display: 'flex', justifyContent: 'flex-end', gap: '1rem', borderTop: '1px solid var(--border-color)' }}>
+              <button className="btn btn-secondary" onClick={() => setShowImportModal(false)}>Cancel</button>
+              <button className="btn btn-primary" onClick={handleProcessImport}>
+                <i className="fas fa-check"></i> Process & Import
+              </button>
             </div>
           </div>
         </div>
