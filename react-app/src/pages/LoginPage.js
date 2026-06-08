@@ -35,6 +35,8 @@ const TEAM = [
   { name: 'Vuth Sreyneang', role: 'Member',    avatar: 'VS', image: require('../images/Vuth_Sreyneang.jpg'), isLead: false },
   { name: 'Rothana Choung', role: 'Member',    avatar: 'RC', image: require('../images/Choung_Rothana.jpg'), isLead: false },
   { name: 'Phy Sophorn',    role: 'Member',    avatar: 'PS', image: require('../images/Phy_Sophorn.jpg'), isLead: false },
+  { name: 'Phaok Samnang',    role: 'Member',    avatar: 'PS', image: require('../images/Phaok_Samnang.jpg'), isLead: false },
+
 ];
 
 export default function LoginPage({ onLoginSuccess, onGuestAccess }) {

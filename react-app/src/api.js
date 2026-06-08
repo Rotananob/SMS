@@ -32,7 +32,7 @@ export const authAPI = {
   me: () => api.get('/auth/me'),
 };
 
-export const studentsAPI = {
+export const studentsAPI = {  
   getAll: () => api.get('/students'),
   getOne: (id) => api.get(`/students/${id}`),
   create: (data) => api.post('/students', data),
