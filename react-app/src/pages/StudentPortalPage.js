@@ -480,7 +480,7 @@ export default function StudentPortalPage({ onBackToLogin }) {
               flexWrap: 'wrap'
             }}>
               {[
-                { id: 'overview', label: 'Overview', icon: 'fas fa-home' },
+                { id: 'overview', label: 'Overview', icon: 'fas fa-home'},
                 { id: 'courses', label: 'Courses', icon: 'fas fa-book' },
                 { id: 'grades', label: 'Grades', icon: 'fas fa-star' },
                 { id: 'attendance', label: 'Attendance', icon: 'fas fa-calendar-check' }

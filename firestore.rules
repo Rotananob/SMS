@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Students collection - allow full access
+    match /students/{studentId} {
+      allow read, write: if true;
+    }
+
+    // Courses collection - allow full access
+    match /courses/{courseId} {
+      allow read, write: if true;
+    }
+
+    // Enrollments collection - allow full access
+    match /enrollments/{enrollmentId} {
+      allow read, write: if true;
+    }
+
+    // Attendance collection - allow full access
+    match /attendance/{attendanceId} {
+      allow read, write: if true;
+    }
+
+    // Grades collection - allow full access
+    match /grades/{gradeId} {
+      allow read, write: if true;
+    }
+
+    // Notifications collection - allow full access
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    // Catch-all for any other collections
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
