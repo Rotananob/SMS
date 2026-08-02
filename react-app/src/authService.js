@@ -26,9 +26,9 @@ export const authService = {
     return onAuthStateChanged(auth, callback);
   },
 
-  // ឈានលេង (optional, for admin registration)
+  // Registration strictly disabled to prevent unauthorized access
   signup: (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    throw new Error('Registration is strictly disabled for security reasons.');
   },
 
   // ទទួលបាននូវម្ដងម្កាល់ដែលនិយាយលេង

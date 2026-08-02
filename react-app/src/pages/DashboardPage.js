@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { studentService, courseService, gradeService, attendanceService, notificationService } from '../firestoreService';
 import '../index.css';
 import YoungPOSLogo from '../images/YoungPOS_LOGO.png';
-import TrollChatbotLogo from '../images/Troll_Chatbot_logo.jpg';
+import BaciiLogo from '../images/Bacii_logo.jpg';
 import RotanaElearningLogo from '../images/rotana_elerning_logo.jpg';
 
 export default function DashboardPage({ onPageChange }) {
@@ -238,13 +238,13 @@ export default function DashboardPage({ onPageChange }) {
                 </div>
               </a>
 
-              <a href="https://troll-setec-chatbot.web.app/" target="_blank" rel="noopener noreferrer" className="app-card" style={{ display: 'flex', gap: '1rem', padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'var(--transition)', textDecoration: 'none' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0, overflow: 'hidden' }}>
-                  <img src={TrollChatbotLogo} alt="Troll Chatbot" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <a href="https://bacii-cal.firebaseapp.com/" target="_blank" rel="noopener noreferrer" className="app-card" style={{ display: 'flex', gap: '1rem', padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'var(--transition)', textDecoration: 'none' }}>
+                <div style={{ width: '50px', height: '50px', borderRadius: '10px', background: 'linear-gradient(135deg, #ef4444, #dc2626)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '1.5rem', flexShrink: 0, overflow: 'hidden' }}>
+                  <img src={BaciiLogo} alt="BacII Calculator" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div>
-                  <h4 style={{ color: 'var(--text-main)', marginBottom: '0.25rem', fontSize: '1rem' }}>Troll Chatbot</h4>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: '1.4' }}>Interactive AI Assistant</p>
+                  <h4 style={{ color: 'var(--text-main)', marginBottom: '0.25rem', fontSize: '1rem' }}>BacII Calculator</h4>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', lineHeight: '1.4' }}>Grade Calculator Tool</p>
                 </div>
               </a>
 

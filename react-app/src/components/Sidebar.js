@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import '../index.css';
 import YoungPOSLogo from '../images/YoungPOS_LOGO.png';
 import RotanaElearningLogo from '../images/rotana_elerning_logo.jpg';
-import TrollChatbotLogo from '../images/Troll_Chatbot_logo.jpg';
+import BaciiLogo from '../images/Bacii_logo.jpg';
 
 export default function Sidebar({ currentPage, onPageChange, onLogout, user, isOpen, onClose }) {
   const { t } = useLanguage();
@@ -85,15 +85,15 @@ export default function Sidebar({ currentPage, onPageChange, onLogout, user, isO
                 <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #6366f1, #4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
                   <img src={RotanaElearningLogo} alt="E-Learning" style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }} />
                 </div>
-                <span>E-Learning</span>
+                <span>Rotana E-Learning</span>
               </a>
             </li>
             <li>
-              <a href="https://troll-setec-chatbot.web.app/" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ padding: '0.75rem 1.25rem', marginBottom: '0.25rem' }}>
-                <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={TrollChatbotLogo} alt="Troll Chatbot" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <a href="https://bacii-cal.firebaseapp.com/" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ padding: '0.75rem 1.25rem', marginBottom: '0.25rem' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '4px', background: 'linear-gradient(135deg, #ef4444, #dc2626)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={BaciiLogo} alt="BacII Calculator" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <span>Troll Chatbot</span>
+                <span>BacII Calculator</span>
               </a>
             </li>
             <li>
@@ -108,7 +108,7 @@ export default function Sidebar({ currentPage, onPageChange, onLogout, user, isO
         <div className="sidebar-footer">
           <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>Developed by</p>
-            <p style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: '0.25rem 0', fontFamily: "'Dongrek', sans-serif" }}>ROTANA NOB</p>
+            <p style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: '0.25rem 0', fontFamily: "'Dongrek', sans-serif" }}>ASIA EURO STUDENTS</p>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
             <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{t('pages.settings.preferences') || 'Theme'}</span>

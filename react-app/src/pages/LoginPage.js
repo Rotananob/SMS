@@ -6,14 +6,14 @@ import '../styles/Login.css';
 /* ─── Firebase error → friendly message ─── */
 const getErrorMessage = (errorCode, isRegistering, t) => {
   const map = {
-    'auth/user-not-found':        'No account found with this email.',
-    'auth/wrong-password':        'Incorrect password. Please try again.',
-    'auth/email-already-in-use':  'This email is already registered.',
-    'auth/weak-password':         'Password must be at least 6 characters.',
-    'auth/invalid-email':         'Please enter a valid email address.',
-    'auth/too-many-requests':     'Too many attempts. Please try again later.',
-    'auth/network-request-failed':'Connection error. Check your internet.',
-    'auth/invalid-credential':    'Invalid email or password.',
+    'auth/user-not-found': 'No account found with this email.',
+    'auth/wrong-password': 'Incorrect password. Please try again.',
+    'auth/email-already-in-use': 'This email is already registered.',
+    'auth/weak-password': 'Password must be at least 6 characters.',
+    'auth/invalid-email': 'Please enter a valid email address.',
+    'auth/too-many-requests': 'Too many attempts. Please try again later.',
+    'auth/network-request-failed': 'Connection error. Check your internet.',
+    'auth/invalid-credential': 'Invalid email or password.',
   };
   return map[errorCode] || (isRegistering ? 'Registration failed. Please try again.' : 'Sign in failed. Please try again.');
 };
@@ -30,12 +30,12 @@ const FEATURES = [
 
 /* ─── Team members with images ─── */
 const TEAM = [
-  { name: 'Rotana NOB',     role: 'Developer', avatar: 'RN', image: require('../images/Rotana_NOB.jpg'), isLead: true  },
-  { name: 'RA Piseth',      role: 'Member',    avatar: 'RP', image: require('../images/Ra_Piseth.jpg'), isLead: false },
-  { name: 'Vuth Sreyneang', role: 'Member',    avatar: 'VS', image: require('../images/Vuth_Sreyneang.jpg'), isLead: false },
-  { name: 'Rothana Choung', role: 'Member',    avatar: 'RC', image: require('../images/Choung_Rothana.jpg'), isLead: false },
-  { name: 'Phy Sophorn',    role: 'Member',    avatar: 'PS', image: require('../images/Phy_Sophorn.jpg'), isLead: false },
-  { name: 'Phaok Samnang',    role: 'Member',    avatar: 'PS', image: require('../images/Phaok_Samnang.jpg'), isLead: false },
+  { name: 'Rotana NOB', role: 'Dev', avatar: 'RN', image: require('../images/Rotana_NOB.jpg'), isLead: true },
+  { name: 'RA Piseth', role: 'Member', avatar: 'RP', image: require('../images/Ra_Piseth.jpg'), isLead: false },
+  { name: 'Vuth Sreyneang', role: 'Member', avatar: 'VS', image: require('../images/Vuth_Sreyneang.jpg'), isLead: false },
+  { name: 'Rothana Choung', role: 'Member', avatar: 'RC', image: require('../images/Choung_Rothana.jpg'), isLead: false },
+  { name: 'Phy Sophorn', role: 'Member', avatar: 'PS', image: require('../images/Phy_Sophorn.jpg'), isLead: false },
+  { name: 'Phaok Samnang', role: 'Member', avatar: 'PS', image: require('../images/Phaok_Samnang.jpg'), isLead: false },
 
 ];
 
@@ -44,20 +44,20 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
 
   /* ── form state ── */
   const [isRegistering, setIsRegistering] = useState(false);
-  const [email, setEmail]                 = useState('');
-  const [password, setPassword]           = useState('');
-  const [confirmPwd, setConfirmPwd]       = useState('');
-  const [fullName, setFullName]           = useState('');
-  const [remember, setRemember]           = useState(false);
-  const [showPwd, setShowPwd]             = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPwd, setConfirmPwd] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [remember, setRemember] = useState(false);
+  const [showPwd, setShowPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [forgotEmail, setForgotEmail]     = useState('');
+  const [forgotEmail, setForgotEmail] = useState('');
   const [forgotLoading, setForgotLoading] = useState(false);
   const [showRegisterWarning, setShowRegisterWarning] = useState(false);
 
   /* ── feedback state ── */
-  const [error,   setError]   = useState('');
+  const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -92,7 +92,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
     if (isRegistering) {
       if (!fullName.trim()) { setError(t('login.errors.enterFullName')); return; }
       if (password !== confirmPwd) { setError(t('login.errors.passwordMismatch')); return; }
-      if (password.length < 6)     { setError(t('login.errors.passwordShort')); return; }
+      if (password.length < 6) { setError(t('login.errors.passwordShort')); return; }
     }
 
     setLoading(true);
@@ -103,18 +103,18 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
         setTimeout(() => onLoginSuccess(cred.user), 1400);
       } else {
         const cred = await authService.login(email, password);
-        
+
         // Handle Remember Me
         if (remember) {
           localStorage.setItem('sms_remembered_email', email);
         } else {
           localStorage.removeItem('sms_remembered_email');
         }
-        
+
         // Save auth token for public view access
         localStorage.setItem('sms_auth_token', cred.user.uid);
         localStorage.setItem('sms_student_id', cred.user.uid);
-        
+
         setSuccess(t('login.success.welcome'));
         setTimeout(() => onLoginSuccess(cred.user), 1200);
       }
@@ -232,31 +232,7 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             </p>
           </div>
 
-          {/* Mode toggle tabs */}
-          <div className="login-tabs" role="tablist">
-            <button
-              id="tab-signin"
-              role="tab"
-              aria-selected={!isRegistering}
-              className={`login-tab ${!isRegistering ? 'active' : ''}`}
-              onClick={() => switchMode(false)}
-              type="button"
-            >
-              <i className="fas fa-sign-in-alt" style={{ marginRight: '0.4rem', fontSize: '0.85rem' }} />
-              {t('login.tabs.signIn')}
-            </button>
-            <button
-              id="tab-register"
-              role="tab"
-              aria-selected={isRegistering}
-              className={`login-tab ${isRegistering ? 'active' : ''}`}
-              onClick={() => switchMode(true)}
-              type="button"
-            >
-              <i className="fas fa-user-plus" style={{ marginRight: '0.4rem', fontSize: '0.85rem' }} />
-                {t('login.tabs.register')}
-            </button>
-          </div>
+          {/* Mode toggle tabs removed for security */}
 
           {/* ── Form ── */}
           <form id="login-form" onSubmit={handleSubmit} className="login-form" noValidate>
@@ -367,8 +343,8 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
                   />
                   <span>{t('login.rememberMe')}</span>
                 </label>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="lf-forgot"
                   onClick={() => setShowForgotPassword(true)}
                 >
@@ -414,9 +390,9 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
 
           {/* Public Portal Button */}
           <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-            <button 
-              type="button" 
-              className="btn btn-secondary" 
+            <button
+              type="button"
+              className="btn btn-secondary"
               style={{ width: '100%', padding: '0.75rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', background: 'rgba(99,102,241,0.1)', color: 'var(--primary)', border: '1px solid rgba(99,102,241,0.2)' }}
               onClick={onGuestAccess}
             >
@@ -457,8 +433,8 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             {/* Developer credit */}
             <div className="lf-credit-author">
               <i className="fas fa-laptop-code lf-dev-icon" />
-              <span>Rotana NOB</span>
-              <span className="lf-dev-badge">Developer</span>
+              <span>Topic:</span>
+              <span className="lf-dev-badge">Student Management System</span>
             </div>
             <p className="lf-credit-uni">
               <i className="fas fa-university" />
