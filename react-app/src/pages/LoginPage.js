@@ -388,6 +388,20 @@ export default function LoginPage({ onLoginSuccess, onGuestAccess }) {
             </button>
           </form>
 
+          {/* Test Account Info */}
+          <div 
+            style={{ marginTop: '1.5rem', padding: '1rem', background: 'rgba(99, 102, 241, 0.1)', borderRadius: 'var(--radius)', border: '1px dashed rgba(99, 102, 241, 0.4)', fontSize: '0.9rem', color: 'var(--text-main)', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s ease' }}
+            onClick={() => { setEmail('test@sms.com'); setPassword('123123'); }}
+            title="Click to auto-fill test credentials"
+            className="test-account-box"
+          >
+            <div style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: 'var(--primary)' }}>
+              <i className="fas fa-info-circle"></i> Test Account Details (Click to Auto-fill)
+            </div>
+            <div>Email: <strong style={{ userSelect: 'all' }}>test@sms.com</strong></div>
+            <div>Password: <strong style={{ userSelect: 'all' }}>123123</strong></div>
+          </div>
+
           {/* Public Portal Button */}
           <div style={{ marginTop: '1rem', textAlign: 'center' }}>
             <button
